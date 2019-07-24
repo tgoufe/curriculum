@@ -1,12 +1,4 @@
----
-title: 【乾坤大挪移】如何高逼格的交换两个变量的值
-date: 2019-03-21 17:00:00
-tags: JavaScript
-categories: 开发技巧
-password: tgfe
-abstract: Welcome to my blog, enter password to read.
-message: Welcome to my blog, enter password to read.
----
+
 >变量交换是每种开发语言的入门知识，通常在第二节的时候就会被介绍（第一节课在扯皮）
 
 <!--more-->

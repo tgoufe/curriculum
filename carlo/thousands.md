@@ -1,13 +1,4 @@
 
----
-title: 【分筋错骨手】如何给数字添加千分位分隔
-date: 2019-04-24 17:00:00
-tags: JavaScript
-categories: 开发技巧
-password: tgfe
-abstract: Welcome to my blog, enter password to read.
-message: Welcome to my blog, enter password to read.
----
 
 
 > 在很多商城或者统计报表的需求中，经常需要前端去把一大串传数字每隔三位添加一个逗号，这样的需求怎么去高逼格实现呢？

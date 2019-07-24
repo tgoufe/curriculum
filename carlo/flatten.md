@@ -1,13 +1,4 @@
 
----
-title: 【大力金刚掌】如何实现数组扁平化
-date: 2019-05-08 17:00:00
-tags: JavaScript
-categories: 开发技巧
-password: tgfe
-abstract: Welcome to my blog, enter password to read.
-message: Welcome to my blog, enter password to read.
----
 
 
 > 数组扁平化，顾名思义就是将多层嵌套的多位数组转换成结构清晰，层级更少的数组。

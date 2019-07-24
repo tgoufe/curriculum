@@ -1,12 +1,3 @@
----
-title: 前端如何玩转Nginx
-date: 2019-04-23 11:00:00
-tags: nginx
-categories: 开发技巧
-password: tgfe
-abstract: Welcome to my blog, enter password to read.
-message: Welcome to my blog, enter password to read.
----
 
 前端如何玩转Nginx
 

@@ -1,9 +1,4 @@
----
-title: 【移花接木】call、apply、bind的妙用
-date: 2019-05-09 11:00:00
-tags: javascript
-categories: 开发技巧
----
+
 > call、apply、bind三者均来自Function.prototype，被设计用来用于改变函数体内this的指向。
 <!--more-->
 
