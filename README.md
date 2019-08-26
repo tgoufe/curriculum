@@ -18,20 +18,25 @@
 ## 团队成员
 ### 沙翼:无论你多NB，在这里，你只是冰山一角
 ![qqkillqq](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
+
 极不靠谱的TL，但是可以给你一个遭人嫉妒的团队，给你一个不断进步的平台。
 
 著有全网收听量最高的WEB前端免费音频教程[《陪你读书》](https://www.ximalaya.com/jiaoyu/3740790/)
 ### 十方文：
 ![十方文](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1067.JPG)
+
 这家伙很懒，估计什么都不会留下，不过听说能当百度用。
 ### carry：
 ![carry](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1065.JPG)
+
 小仙女飙起车来真的是谁也拦不住
 ### carlo：
 ![qqkillqq](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1073.JPG)
+
 你知道的和不知道的骚操作都在这里
 ### 你的声先生：
 ![你的声先生](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1071.JPG)
+
 能教你ES6的不只有阮一峰。
 ### 果果果果园：
 ![果果果果园](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1069.JPG)
@@ -39,12 +44,14 @@
 ![小宇](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
 ### 云中桥：以大多数人的努力程度之低，还轮不到拼天赋
 ![云中桥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1068.JPG)
+
 前端技术玩家：玩得了JS，干的了Java，上的了Node，配得了Linux，对函数式编程爱的不要不要，耍的如虎生风，各种非主流操作更是让你瞠目结舌。
 想了解更多关于中高级前端的知识可以[点击这里](./cqf)
 ### 鲜肉
 ![鲜肉](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1066.JPG)
 ### 磊哥
 ![磊哥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1072.JPG)
+
 你之前学的那个叫样式，你根本不知道什么叫CSS
 ### 英俊潇洒你冲哥
 ![英俊潇洒你冲哥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
