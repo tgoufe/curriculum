@@ -11,24 +11,31 @@
 《陪你读书》系列的配套教程会陆续在公众号内进行发布，想要更好掌握前端基础知识记得关注哦。
 
 ## 团队成员
-
-<div>
-	<img src="http://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/IMG_1070.JPG" style="max-width:300px">
-	<p>沙翼</p>
-</div>
-### 博哥（十方文）
+### 沙翼
+![qqkillqq](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
+### 十方文
+![十方文](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1067.JPG)
 ### carry
-### 小强（carlo）
-### 王总（你的声先生）
-### 果园
+![carry](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1065.JPG)
+### carlo
+![qqkillqq](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1073.JPG)
+### 你的声先生
+![你的声先生](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1071.JPG)
+### 果果果果园
+![果果果果园](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1069.JPG)
 ### 小宇
-### 陈科长（云中桥）：
+![小宇](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
+### 云中桥：
+![云中桥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1068.JPG)
 > 以大多数人的努力程度之低，还轮不到拼天赋
 
 前端技术玩家：玩得了JS，干的了Java，上的了Node，配得了Linux，对函数式编程爱的不要不要，耍的如虎生风，各种非主流操作更是让你瞠目结舌。
-
 想了解更多关于中高级前端的知识可以[点击这里](./cqf)
+### 鲜肉
+![鲜肉](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1066.JPG)
 ### 磊哥
+![磊哥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1072.JPG)
 ### 英俊潇洒你冲哥
+![英俊潇洒你冲哥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
 
 
