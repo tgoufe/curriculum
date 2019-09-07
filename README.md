@@ -11,11 +11,11 @@
 ## 公众号
 如果你的时间有冲突，你可以关注我们的公众号"冰山工作室"，并在第二天查看回放录像，不过回放录像会定期删除，所以你要记得抓紧时间哦。
 
-## 冰山官网
+## 官网与群聊
 我们的文章会在[冰山工作室官方网站](http://www.bingshangroup.com)第一时间放出，每日更新，现在是时候把它放进你的收藏夹了，如果你破解了官网的二维码还可以加入我们的群聊和我们实时互动哦！
 
-## 冰山白皮书
-《陪你读书》系列的配套教程会陆续在公众号内进行发布，想要更好掌握前端基础知识记得关注哦。
+## 音频和白皮书
+[《陪你读书》](https://www.ximalaya.com/jiaoyu/3740790/)系列第一季已经完结，配套教程（冰山白皮书）会陆续在公众号内进行发布，想要更好掌握前端基础知识记得关注哦。
 
 ## 团队成员
 ### 沙翼:无论你多NB，在这里，你只是冰山一角
@@ -42,8 +42,8 @@
 能教你ES6的不只有阮一峰。
 ### 果果果果园：
 ![果果果果园](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1069.JPG)
-### 小宇：
-![小宇](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
+### LENNY：
+![小宇](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1105.JPG)
 ### 云中桥：以大多数人的努力程度之低，还轮不到拼天赋
 ![云中桥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1068.JPG)
 
@@ -51,15 +51,20 @@
 想了解更多关于中高级前端的知识可以[点击这里](./cqf)
 ### 鲜肉
 ![鲜肉](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1066.JPG)
-### 磊哥
+### EXON：你之前学的顶多叫样式，你根本不知道什么叫CSS
 ![磊哥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1072.JPG)
 
-你之前学的那个叫样式，你根本不知道什么叫CSS
+### GAIKO
+![狗姐](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1106.JPG)
+
+软件行业非著名网红，人送外号狗姐
+### 蚂蚁牙黑:
+![蚂蚁牙黑](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1107.JPG)
 ### 英俊潇洒你冲哥
-![英俊潇洒你冲哥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
-### 狗姐
-![狗姐](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
-### 蚂蚁牙黑
-![狗姐](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1070.JPG)
+![英俊潇洒你冲哥](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1104.JPG)
+### ZHEN
+![ZHEN](https://github.com/tgoufe/curriculum/blob/master/image/IMG_1108.JPG)
+
+冰山FE设计师
 
 
