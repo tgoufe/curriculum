@@ -43,6 +43,8 @@ function setSidebar(){
 }
 module.exports = {
     title: '无论你多NB，在这里你都是冰山一角',
+    base:'/blog2/',
+    dest:'../public',
     description: 'Just playing around',
     serviceWorker:true,
     themeConfig:{
