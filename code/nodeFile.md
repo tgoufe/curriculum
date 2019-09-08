@@ -6,7 +6,7 @@ let path=require('path');
 function getFiles(filePath){
     return fs.readdirSync(filePath).reduce((rs,item)=>{
         let tpath=path.join(filePath,i);
-        rs.push(
+        return rs.concat(
             fs.statSync(tpath).isDirectory()?
             ...getFiles(tpath):
             {path:tpath,name:i}
@@ -14,4 +14,4 @@ function getFiles(filePath){
         return rs;
     },[])
 }
-``` 
+```
