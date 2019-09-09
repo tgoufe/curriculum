@@ -25,8 +25,8 @@ function setSidebar(){
         mode:'设计模式',
         network:'网络',
         vue:'vue',
-        react:'react',
-        hybird:'混合APP开发',
+        // react:'react',
+        // hybird:'混合APP开发',
         tools:'前端工具使用',
         code:'代码片段',
     }
