@@ -1,45 +1,35 @@
 let fs= require('fs');
 let path=require('path');
-function getFiles(filePath){
+function getFiles(filePath,deep=true){
     return fs.readdirSync(filePath).reduce((rs,i)=>{
         let tpath=path.join(filePath,i);
-        rs=rs.concat(
+        return rs.concat(
             fs.statSync(tpath).isDirectory()?
-            getFiles(tpath):
+            (deep?getFiles(tpath):[]):
             {path:tpath,name:i}
         )
-        return rs;
     },[])
 }
-function getMD(path){
-    return getFiles(path).filter(item=>/\.md/.test(item.path)).map(item=>item.path)
+function getFolders(filePath,deep=true){
+	return fs.readdirSync(filePath).reduce((rs,i)=>{
+        let tpath=path.join(filePath,i);
+        if(!fs.statSync(tpath).isDirectory()){
+        	return rs;
+        }
+        return rs.concat({path:tpath,name:i},deep?getFolders(tpath,deep):[]);
+    },[])
 }
 function setSidebar(){
-    let data={
-        base:'基础原理',
-        function:'高级函数',
-        gongfu:'前端武林秘籍',
-        algorithm:'算法',
-        css:'你学不会的CSS',
-        jskill:'js 技巧',
-        mode:'设计模式',
-        network:'网络',
-        vue:'vue',
-        // react:'react',
-        // hybird:'混合APP开发',
-        tools:'前端工具使用',
-        code:'代码片段',
-    }
-    let rs=[];
-    for(let key in data){
-        rs.push({
-            title:data[key],
-            children:getFiles(`./${key}`)
+    return getFolders('./',false)
+    .filter(item=>!/^\./.test(item.name))
+    .map(item=>{
+    	return {
+    		title:item.name,
+    		children:getFiles(item.path)
                 .filter(item=>/\.md/.test(item.path))
                 .map(item=>item.path)
-        })
-    }
-    return rs;
+    	}
+    })
 }
 module.exports = {
     title: '无论你多NB，在这里你都是冰山一角',
