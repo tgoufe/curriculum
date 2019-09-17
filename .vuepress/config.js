@@ -31,6 +31,20 @@ function setSidebar(){
     	}
     })
 }
+function getSideBar(filepath){
+    return getFolders(`./${filepath}`,false)
+        .filter(item=>!/^\./.test(item.name))
+        .reduce((rs,item)=>{
+            rs.push({
+                title:item.name,
+                children:getFiles(item.path)
+                    .filter(item=>/\.md/.test(item.path)&&item.name!=='README.md')
+                    .map(item=>item.path.replace(filepath,'.').replace('.md',''))
+            });
+            return rs;
+        },[''])
+}
+console.log(getSideBar('action2'));
 module.exports = {
     title: '无论你多NB，在这里你都是冰山一角',
     base:'/blog2/',
@@ -38,16 +52,24 @@ module.exports = {
     description: 'Just playing around',
     serviceWorker:true,
     themeConfig:{
-        sidebar:[
-            ...setSidebar()
-        ],
+        // sidebar:[
+        //     ...setSidebar()
+        // ],
+        sidebar:{
+            '/action1/':getSideBar('action1'),
+            '/action2/':getSideBar('action2'),
+            '/':['',{title:'技术赛',children:[
+                    '/action1/',
+                    '/action2/'
+                ]}]
+        },
         nav:[
+            {text:'第一赛季',link:'/action1/'},
             {text:'冰山工作室官网',items:[
                     {text:'官网',link:'http://www.bingshangroup.com'},
                     {text:'陪你读书',link:'https://www.ximalaya.com/jiaoyu/3740790/'},
                     {text:'立体二维码',link:'http://www.bingshangroup.com#/qc'}
                 ]},
-            {text:'官网博客',link:'http://www.bingshangroup.com/blog'}
         ]
     }
 };
