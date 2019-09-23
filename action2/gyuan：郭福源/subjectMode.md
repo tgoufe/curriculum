@@ -1,3 +1,6 @@
+# 观察者模式应用
+
+
 > 上一篇是[监听DOM加载完成及改变——MutationObserver](https://juejin.im/post/5d6dd5f3f265da03c23eeff9)，实际上是对关于"观察/订阅模式"的一种应用，这次搞定到底什么是“观察者模式”。
 
 在上一篇中对于“观察者模式”的解释概括了一句话：
@@ -11,11 +14,11 @@
 
 上图：（在已订阅的前提下）
 
-![观察者模式.jpg](https://upload-images.jianshu.io/upload_images/4128599-fd722fb89c74b71d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![观察者模式.jpg](http://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/观察者模式.jpg)
 
 
 
-![发布订阅.png](https://upload-images.jianshu.io/upload_images/4128599-b38ca6c40a274d21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![发布订阅.png](http://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/发布订阅.png)
 
 总结：
 1. 
@@ -34,7 +37,7 @@
 ### 二、观察者模式怎么用
 
 上一个粗糙但中二的栗子：
-![栗子.gif（源码附件1）](https://upload-images.jianshu.io/upload_images/4128599-737f533be5abce40.gif?imageMogr2/auto-orient/strip)
+![栗子.gif（源码附件1）](http://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/c.gif)
 
 
 做如图效果，当切换第一个下拉列表时，进行如下操作：
@@ -45,7 +48,7 @@
 ------------------------
 ##### 开始搞起：
 - 常规思路：
-```
+```html
 <!--html-->
 <select name="" id="per">
   <option value="0">----</option>
@@ -92,7 +95,7 @@
 - **核心思路：每一个被观察者对应着一个任务队列，任务队列中存在着观察者，发布时依次通知。**
 
 上代码：
-```
+```javascript
 	// 观察者类
 	class Observer {
 		constructor(id, fn) {
@@ -161,7 +164,7 @@
 
 接下来是订阅 - 将`观察者`与`被观察者`链接起来。
 
-```
+```javascript
 
 	let btnObserver= new Observer(1001, activePerFn);  // 按钮观察者
 	let optionObserver= new Observer(1002, showOptionsFn); // 下拉列表观察者
@@ -176,7 +179,7 @@
 
 ```
 此时的被观察者`perSubject`对应的任务队列应该是：
-```
+```javascript
 /*	
 (3) [Observer, Observer, Observer]
 	0: Observer {id: 1001, fn: ƒ}
@@ -188,7 +191,7 @@
 
 ```
 那么，最终的发布动作，依然依靠`change`事件，触发已经写好的`notify`事件
-```
+```javascript
 	selPer.addEventListener('input', function (ev) {
 		const val = this.value;
 		if (val) perSubject.notify(val);
