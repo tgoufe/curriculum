@@ -61,11 +61,13 @@ categories: css css3
 >
 > type表示类型，一类元素，比如都是p元素或者div元素。child表示子元素，没有什么限制。
 
+后面介绍的伪类选择器后缀是child，of-type意思都是一样的。
+
 ##### 4-选择第一个和最后一个子元素
 
-:first-child
+:first-child与first-of-type
 
-:last-child
+:last-child与last-of-type
 
 > 小技巧 :only-child和:only-of-type可以用其它方法实现。
 
@@ -88,4 +90,18 @@ categories: css css3
 	style
 }
 ```
+
+##### 5-选择每第n个子元素或某种元素
+
+#### 3、动态伪类
+
+#### 4、UI状态伪类
+
+#### 5、否定伪类
+
+:not()
+
+#### 6、:target伪类
+
+#### 7、:lang伪类
 
