@@ -1,5 +1,4 @@
-#观察者模式应用
-
+# 观察者模式应用
 
 > 上一篇是[监听DOM加载完成及改变——MutationObserver](https://juejin.im/post/5d6dd5f3f265da03c23eeff9)，实际上是对关于"观察/订阅模式"的一种应用，这次搞定到底什么是“观察者模式”。
 
@@ -51,7 +50,7 @@
 ### 开始搞起：
 
 #### 思路1.0：
-```
+```html
 <!--html-->
 <select name="" id="per">
   <option value="0">----</option>
