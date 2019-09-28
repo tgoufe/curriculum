@@ -13,15 +13,7 @@ categories: css css3
 
 伪类是什么可以称做"幽灵类"，它是选择器的一种。
 
-#### 1、拼接伪类
-
-css允许伪类串联在一起。
-
-```css
-a:link:hover{color:red;}
-```
-
-#### 2、结构伪类
+#### 1、结构伪类
 
 伪类大多数都是结构上的，即它们指代文档中的标记结构。
 
@@ -35,8 +27,6 @@ a:link:hover{color:red;}
 
 > 小技巧 :root权重高于html选择器。
 >
-
-
 
 ##### 2-选择空元素
 
@@ -103,47 +93,11 @@ a:link:hover{color:red;}
 
 :nth-last-child与:nth-last-of-type(an+b)	他们的用法跟上面一样，不过顺序是倒序开始。
 
-#### 3、动态伪类
-
-##### 1-超链接伪类
-
-定义了两个只能在超链接上的伪类。
-
-:link 未访问的链接	 :visited 已访问的链接
-
-##### 2-用户操作伪类
-
-:focus 获得输入焦点的元素。
-
-:hover 鼠标指针悬停在元素或超链接上。
-
-:active 用户单击超链接按下鼠标的那段时间。
-
-#### 4、UI状态伪类
-
-| 伪类           | 说明                                                         |
-| -------------- | ------------------------------------------------------------ |
-| :enabled       | 指代启用的用户界面元素（比如表单元素），即接受输入的元素。   |
-| :disabled      | 指代禁用的用户界面元素（比如表单元素），即接受输入的元素。   |
-| :checked       | 指代由用户或文档默认选中的单选按钮或复选框。                 |
-| :indeterminate | 指代既没有选中也没有未选中的单选按钮或复选框，这个状态只能由DOM脚本设定。 |
-| :default       | 指代默认选中的单选按钮、复选框或选项。                       |
-| :valid         | 指代满足所有数据有效性语义的输入框。                         |
-| :invalid       | 指代不满足所有数据有效性语义的输入框。                       |
-| :in-range      | 指代输入的值在最大值和最小值之间的输入框。                   |
-| :out-of-range  | 指代输入的值不在最大值和最小值之间的输入框。                 |
-| :required      | 指代必须输入值的输入框。                                     |
-| :optional      | 指代不需要一定输入值的输入框。                               |
-| :read-write    | 指代可由用户编辑的输入框。                                   |
-| :read-only     | 指代不能由用户编辑的输入框。                                 |
-
-虽然UI元素的状态可由用户操作而改变，但是UI状态伪类不是单纯动态的，因为它们还受文档结构或DOM脚本的影响。
-
-#### 5、否定伪类
+#### 2、否定伪类
 
 :not()选择不匹配的东西
 
-> 小技巧 优化代码
+> 小技巧 列表导航优化代码
 ```html
 <ul>
 	<li>首页</li>
@@ -161,7 +115,7 @@ li:last-child{
   border-bottom:0;
 }
 ```
-用not()属性
+:not()属性
 ```css
 li:not(:last-child){
 	border-bottom:1px solid blue
@@ -170,11 +124,7 @@ li:not(:last-child){
 
 :not()伪类不能嵌套，可以串联使用。
 
-#### 6、:target伪类
-
-#### 7、:lang伪类
-
-#### 8、伪元素选择符
+#### 3、伪元素选择符
 
 :before与:after在元素之前或之后插入某些内容。
 
@@ -198,10 +148,181 @@ img:after{
 
 字面意思假的元素。伪元素本质上是创建了一个虚拟容器(元素)，我们可以在其中添加内容或样式。
 
-##### before与after伪元素
+> 小技巧 伪元素单冒号与双冒号的区别。
 
+比如 :before与::before
 
+1. 二者写法是等效的，都表示伪元素。
+2. :before是CSS2的写法，::before是CSS3的写法。
+3. :before的兼容性比::before兼容性好，但是H5开发中建议使用::before
 
 综合实例
 
 分页
+
+```html
+<template>
+    <div class="page flex-container center margint20">
+        <div pageName="上一页"></div>
+        <p v-for="($index,item) in 5" v-text="$index" :page="$index === 3 && 'current'"></p>
+        <div pageName="下一页"></div>
+    </div>
+</template>
+<style>
+.page{
+  .current{
+    background: red;
+    color:white;
+  }
+  &>*{
+    border:1px solid red;
+    margin:0 5px;
+  }
+  text-align: center;
+  font-size: 12px;
+  color:red;
+  &>div{
+    width:60px;
+    height:30px;
+    line-height: 30px;
+    border:1px red solid;
+    &:first-of-type{
+      border-radius:30px 2px 2px 30px;
+      &:after{
+        content:'上一页'
+      }
+    }
+    &:last-of-type{
+      border-radius:2px 30px 30px 2px;
+      &:after{
+        content:'下一页'
+      }
+    }
+  }
+  &>p{
+    border-radius:2px;
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    &[page='current']{
+      @extend .current;
+    }
+    &:only-of-type{
+      @extend .current;
+      // @at-root .page>div{
+      //   display:none;
+      // }
+    }
+
+  }
+  &>*:hover{
+    @extend .current;
+  }
+}
+</style>
+```
+
+时间树
+
+```html
+<template>
+	<div class="timeTree margint50">
+        <div class="times" v-for="item in 3">
+            <div class="clearfix">
+                <div><img src="../../assets/bingshanbear.svg" width="30" alt=""></div>
+                <div>
+                    <h1>标题</h1>
+                    <p class="text-dark">内容</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+.timeTree{
+  position: relative;
+  &:before,&:after{
+    position:absolute;
+    content: '';
+    width:40px;
+    height:40px;
+    z-index: 1;
+    left: 50%;
+    margin-left: -20px;
+  }
+  &:before{
+    top: -30px;
+    background: url('../../assets/start.svg') no-repeat;
+    background-size: 100% auto;
+  }
+  &:after{
+    bottom:10px;
+    background: url('../../assets/end.svg') no-repeat;
+    background-size: 100% auto;
+  }
+  &:after{}
+  .times{
+    position:relative;
+    padding:50px;
+    &:after,&:before{
+      position:absolute;
+      content: '';
+      width:50%;
+      height:100%;
+      border:10px solid currentColor;
+      top:0;
+    }
+    &:before{
+      border-width:20px;
+    }
+    &:nth-of-type(odd){
+      .clearfix div:first-child{
+        float:left;
+      }
+      .clearfix div:last-child{
+        float:right;
+      }
+      &:after,&:before{
+        left:0;
+        border-top-left-radius:50px;
+        border-bottom-left-radius:50px;
+        border-right:0;
+      }
+    }
+    &:nth-of-type(even){
+      .clearfix div:first-child{
+        float:right;
+      }
+      .clearfix div:last-child{
+        float:left;
+      }
+      &:after,&:before{
+        right:0;
+        border-top-right-radius:50px;
+        border-bottom-right-radius:50px;
+        border-left:0;
+      }
+    }
+    &:not(:first-of-type){
+      margin-top:-20px;
+    }
+    &:nth-of-type(1){
+      color:rgba(255,0,0,.5);
+    }
+    &:nth-of-type(2){
+      color:rgba(0,0,255,.5);
+    }
+    &:nth-of-type(3){
+      color:rgba(0,128,0,.5);
+    }
+    &:nth-of-type(4){
+      color:orange;
+    }
+  }
+  
+}
+</style>
+```
+
+[^]: 本示例采用cmui样式库，有兴趣可以访问下载
