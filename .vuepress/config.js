@@ -44,7 +44,6 @@ function getSideBar(filepath){
             return rs;
         },[''])
 }
-console.log(getSideBar('action2'));
 module.exports = {
     title: '无论你多NB，在这里你都是冰山一角',
     base:'/blog2/',
