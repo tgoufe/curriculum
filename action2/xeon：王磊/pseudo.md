@@ -25,7 +25,7 @@ categories: css css3
 
 在html中，根元素就是html，只有xml语言中，会有所不同。
 
-> 小技巧 :root权重高于html选择器。
+> :root权重高于html选择器。
 >
 
 ##### 2-选择空元素
@@ -53,7 +53,7 @@ categories: css css3
 
 :only-child与:only-of-type都是选择唯一子元素，区别在于:only-child是父元素的唯一元素，:only-of-type是父元素下同胞中唯一的元素。
 
-> 小技巧 从他们的后缀单词的字面意思可以理解。
+> 从他们的后缀单词的字面意思可以理解。
 >
 > type表示类型，一类元素，比如都是p元素或者div元素。child表示子元素，没有什么限制。
 
@@ -65,7 +65,7 @@ categories: css css3
 
 :last-child与last-of-type
 
-> 小技巧 :only-child和:only-of-type可以用其它方法实现。
+> :only-child和:only-of-type可以用其它方法实现。
 
 ```css
 :only-child{
@@ -97,7 +97,7 @@ categories: css css3
 
 :not()选择不匹配的东西
 
-> 小技巧 列表导航优化代码
+> 列表导航优化代码
 ```html
 <ul>
 	<li>首页</li>
@@ -115,7 +115,7 @@ li:last-child{
   border-bottom:0;
 }
 ```
-:not()属性
+利用:not()属性
 ```css
 li:not(:last-child){
 	border-bottom:1px solid blue
@@ -138,7 +138,7 @@ img:after{
 }
 ```
 
-> 小技巧 这里会有一个被问到最多的问题，那就是伪类与伪元素的区别。
+> 这里会有一个被问到最多的问题，那就是伪类与伪元素的区别。
 
 **伪类**
 
@@ -148,7 +148,7 @@ img:after{
 
 字面意思假的元素。伪元素本质上是创建了一个虚拟容器(元素)，我们可以在其中添加内容或样式。
 
-> 小技巧 伪元素单冒号与双冒号的区别。
+> 伪元素单冒号与双冒号的区别。
 
 比如 :before与::before
 
@@ -156,9 +156,15 @@ img:after{
 2. :before是CSS2的写法，::before是CSS3的写法。
 3. :before的兼容性比::before兼容性好，但是H5开发中建议使用::before
 
-综合实例
+> input，img，iframe等一些单标签不支持伪元素。
 
-分页
+这几个标签是不支持类似 img::before 这样使用。
+
+要想要标签支持伪元素，需要这个元素是要可以插入内容的，也就是说这个元素要是一个容器。而 input，img，iframe 等元素都不能包含其他元素，所以不能通过伪元素插入内容。
+
+#### 4、综合实例
+
+##### 分页
 
 ```html
 <template>
@@ -222,7 +228,7 @@ img:after{
 </style>
 ```
 
-时间树
+##### 时间树
 
 ```html
 <template>
@@ -325,4 +331,5 @@ img:after{
 </style>
 ```
 
-[^]: 本示例采用cmui样式库，有兴趣可以访问下载
+[本示例采用cmui样式库，有兴趣可以访问下载]: https://github.com/tgoufe/CyanMapleDesign
+
