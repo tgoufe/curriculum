@@ -388,5 +388,7 @@ img:after{
 </style>
 ```
 
-[本示例采用cmui样式库，有兴趣可以访问下载]: https://github.com/tgoufe/CyanMapleDesign	"本示例采用cmui样式库，有兴趣可以访问下载"
+
+
+[本示例采用cmui样式库，有兴趣可以访问下载](https://github.com/tgoufe/CyanMapleDesign )
 
