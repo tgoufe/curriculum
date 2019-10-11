@@ -26,22 +26,23 @@ categories: css css3
 在html中，根元素就是html，只有xml语言中，会有所不同。
 
 > :root权重高于html选择器。
->
+
+![01](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/pseudo_1.png)
 
 ##### 2-选择空元素
 
 :empty伪类可以选择没有任何子代的元素，甚至连文本节点也没有（如果元素内有空格或回车符除外）。
 
-> 小技巧 用于判断子元素为组件模块是否有效。而本元素样式含有margin，padding等影响页面布局的样式。
+> 用于判断子元素为组件模块是否有效。而本元素样式含有margin，padding等影响页面布局的样式。
 >
-> 如果组件无效为空，作为组件的边距样式也变为无效。
+> 如果组件无效为空，作为组件的盒子样式也变为无效。
 ```html
 <style>
 .empty:empty{
 	display:none;
 }
 </style>
-<div class="empty" style="margin-top:20px;padding:20px;background:red">
+<div class="empty" style="margin-top:20px;padding:20px;border:20px green solid;background:red">
 	<templates v-if="false">组件</templates>
 </div>
 ```
@@ -58,6 +59,24 @@ categories: css css3
 > type表示类型，一类元素，比如都是p元素或者div元素。child表示子元素，没有什么限制。
 
 后面介绍的伪类选择器后缀是child，of-type意思都是一样的。
+
+```html
+<div class="only">
+  <p>样式一</p>
+  <div>样式二</div>
+</div>
+```
+
+```css
+.only p:only-child{
+	color:red;
+}
+.only div:only-of-type{
+	color:green;
+}
+```
+
+![02](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/pseudo_2.png)
 
 ##### 4-选择第一个和最后一个子元素
 
@@ -89,9 +108,44 @@ categories: css css3
 
 ##### 5-选择每第n个子元素或某种元素
 
-:nth-child与:nth-of-type(an+b)	首先查找当前所有匹配的兄弟元素，
+:nth-child(an+b)与:nth-of-type(an+b)	首先查找当前所有匹配的兄弟元素，
 
-:nth-last-child与:nth-last-of-type(an+b)	他们的用法跟上面一样，不过顺序是倒序开始。
+:nth-last-child(an+b)与:nth-last-of-type(an+b)	他们的用法跟上面一样，不过顺序是倒序开始。
+
+> nth-child(n) n为an+b a，b的意思
+
+a表示每次循环中包括几种样式，b表示指定的样式在循环中所在的位置。
+
+4n+4的写法可以写成4n
+
+```html
+<ul>
+  <li>样式1</li>
+  <li>样式2</li>
+  <li>样式3</li>
+  <li>样式4</li>
+  <li>样式5</li>
+  。。。
+  <li>样式20</li>
+</ul>
+```
+
+```css
+li:nth-child(4n+1){
+  color:red
+}
+li:nth-child(4n+2){
+  color:green
+}
+li:nth-child(4n+3){
+  color:blue
+}
+li:nth-child(4n){
+  color:yellow
+}
+```
+
+![03](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/pseudo_3.png)
 
 #### 2、否定伪类
 
@@ -142,7 +196,7 @@ img:after{
 
 **伪类**
 
-字面意思假的类。伪类其实是弥补了CSS选择器的不足，用来更方便地获取信息。
+字面意思假的类。伪类其实是弥补了CSS选择器的不足，用来更方便地获取信息。它是一种选择器。
 
 **伪元素**
 
@@ -227,6 +281,8 @@ img:after{
 }
 </style>
 ```
+
+![04](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/pseudo_4.png)
 
 ##### 时间树
 
@@ -323,7 +379,7 @@ img:after{
       color:rgba(0,128,0,.5);
     }
     &:nth-of-type(4){
-      color:orange;
+      color:rgba(255,165,0,.5);
     }
   }
   
