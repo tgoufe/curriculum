@@ -9,17 +9,17 @@ categories: css css3
 
 <!--more-->
 
-### css3伪类
+# css3伪类
 
 伪类是什么可以称做"幽灵类"，它是选择器的一种。
 
-#### 1、结构伪类
+## 1、结构伪类
 
 伪类大多数都是结构上的，即它们指代文档中的标记结构。
 
 首先强调，伪类始终指代所**依附的元素**而不是后代元素。以**元素做为首要选择**，这些我们在后面会详细说明。
 
-##### 1-选择根元素
+### 1-选择根元素
 
 :root伪类选择文档的根元素。
 
@@ -29,7 +29,7 @@ categories: css css3
 
 ![01](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/pseudo_1.png)
 
-##### 2-选择空元素
+### 2-选择空元素
 
 :empty伪类可以选择没有任何子代的元素，甚至连文本节点也没有（如果元素内有空格或回车符除外）。
 
@@ -46,7 +46,8 @@ categories: css css3
 	<templates v-if="false">组件</templates>
 </div>
 ```
-##### 3-选择唯一的子元素
+
+### 3-选择唯一的子元素
 
 它选择的元素是相对父元素的唯一子元素。
 
@@ -78,7 +79,7 @@ categories: css css3
 
 ![02](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/pseudo_2.png)
 
-##### 4-选择第一个和最后一个子元素
+### 4-选择第一个和最后一个子元素
 
 :first-child与first-of-type
 
@@ -106,7 +107,7 @@ categories: css css3
 }
 ```
 
-##### 5-选择每第n个子元素或某种元素
+### 5-选择每第n个子元素或某种元素
 
 :nth-child(an+b)与:nth-of-type(an+b)	首先查找当前所有匹配的兄弟元素，
 
@@ -147,7 +148,7 @@ li:nth-child(4n){
 
 ![03](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/pseudo_3.png)
 
-#### 2、否定伪类
+## 2、否定伪类
 
 :not()选择不匹配的东西
 
@@ -178,7 +179,7 @@ li:not(:last-child){
 
 :not()伪类不能嵌套，可以串联使用。
 
-#### 3、伪元素选择符
+## 3、伪元素选择符
 
 :before与:after在元素之前或之后插入某些内容。
 
@@ -216,9 +217,9 @@ img:after{
 
 要想要标签支持伪元素，需要这个元素是要可以插入内容的，也就是说这个元素要是一个容器。而 input，img，iframe 等元素都不能包含其他元素，所以不能通过伪元素插入内容。
 
-#### 4、综合实例
+## 4、综合实例
 
-##### 分页
+### 分页
 
 ```html
 <template>
@@ -284,7 +285,7 @@ img:after{
 
 ![04](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/pseudo_4.png)
 
-##### 时间树
+### 时间树
 
 ```html
 <template>
@@ -387,5 +388,5 @@ img:after{
 </style>
 ```
 
-[本示例采用cmui样式库，有兴趣可以访问下载]: https://github.com/tgoufe/CyanMapleDesign
+[本示例采用cmui样式库，有兴趣可以访问下载]: https://github.com/tgoufe/CyanMapleDesign	"本示例采用cmui样式库，有兴趣可以访问下载"
 
