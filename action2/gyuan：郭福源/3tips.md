@@ -51,7 +51,7 @@
 
 
 
-![栗子](https://upload-images.jianshu.io/upload_images/4128599-3536af6a5957159b.gif?imageMogr2/auto-orient/strip)
+![栗子](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/3tips1.gif)
 
 
 
@@ -191,7 +191,7 @@
 ```
 效果图：
 
-![image](https://upload-images.jianshu.io/upload_images/4128599-2d636cd4f3a1ee04.gif?imageMogr2/auto-orient/strip)
+![image](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/3tips2.gif)
 
 
 ## 三、CSS矢量图内联
@@ -219,7 +219,7 @@ base64的码就不粘了，太多了。
 ```
 
 效果图：
-![image](https://upload-images.jianshu.io/upload_images/4128599-250dcb188bffef5e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/3tips3.jpg)
 
 
 在直接引入之前，需要对一些特殊符号进行转译`"`，`%`，`#`，`{`，`}`，`<`，`>`。（IE也兼容的！）
