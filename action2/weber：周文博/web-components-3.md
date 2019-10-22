@@ -56,7 +56,8 @@ class TgHeader extends HTMLElement{
 	}
 }
 
-customElements.define('tg-header', TgHeader);
+customElements.define('tg-header', TgHeader);    
+</script>
 ```
 + 自定义内置元素：这些元素继承自并扩展内置 `HTML` 元素，该构造器要继承自一个现有的元素对象的构造器（如：`HTMLParagraphElement `、`HTMLUListElement` 等等），在创建时，你必须指定所需扩展的元素，使用时需要先写出基本的元素标签，并通过 `is` 属性指定自定义元素的名称如 `<p is="tg-context"></p>`，如：
 ```html
@@ -69,7 +70,9 @@ class TgContent extends HTMLParagraphElement{
 	connectedCallback(){
 		this.innerHTML += '[tg]';
 	}
-}
+}                                                              
+
+customElements.define('tg-content', TgContent, {extends: 'p'});
 </script>
 ```
 

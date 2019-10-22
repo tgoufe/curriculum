@@ -36,13 +36,13 @@ tags:
 
 另一个就是，也许有的浏览器并不是默认显示 `Shadow DOM` 的，需要在 'Settings -> Preferences -> Elements' 中把 'Show user agent shadow DOM' 打上勾才能看。由于我很早很早就勾选了，导致已经遗忘这件事了，另外也不确定现在的 `Chrome` 浏览器里是否已经默认勾选了
 
-开启了以后，去浏览一些网页，一定会注意到有些元素已经有 `#shadow-root` 节点了，最常见的就是 `input`、`video` 和 `audio` 元素，也就是说 `Chorome` 等浏览器已经开始使用 `Web Components` 我们之前知道 `attachShadow` 方法一旦执行之后，就无法再次执行了，那么规范里面没有它们也就不奇怪了
+开启了以后，去浏览一些网页，一定会注意到有些元素已经有 `#shadow-root` 节点了，最常见的就是 `input`、`video` 和 `audio` 元素，也就是说 `Chorome` 等浏览器已经开始使用 `Web Components` 构造一些内部组件了，我们之前知道 `attachShadow` 方法一旦执行之后，就无法再次执行了，那么规范里面没有它们也就不奇怪了
 
 另外一个比较有意思的事，你可以找一些带 `placeholder` 属性的 `input` 标签，打开 `#shadow-root` 节点向下找，会找到一个 `id` 为 `placeholder` 的 `div` 标签，它上面有个 `pseudo` 属性，值为 `-webkit-input-placeholder`，再想一下 `CSS` 中如何设置 `placeholder` 的样式，是 `Chrome` 提供了 `::-webkit-input-placeholder` 的伪对象，有前缀说明还没有进入标准。。。嗯，这里一定有些 PY 交易。。。未来我们也许可以使用这种方式来定义伪对象了。顺带一提 `pseudo` 翻译过来是虚假的、虚伪的的意思
 
 上回最后还提到了样式的问题，但是更有趣的事情是你可以使用 `link` 标签引入外部样式文件
 
-顺着这个思路我也尝试看看是否可以加入 `script` 标签，发现并不行，但是标签是在 `#shadow-root` 里面，但是代码并没有执行，网络面板里也并没有显示 `js` 文件的的加载，这可能是因为页面加载完成后，在向文档中添加 `&lt;script&gt;` 标签也不会执行的原因
+顺着这个思路我也尝试看看是否可以加入 `script` 标签，发现并不行，但是标签是出现在 `#shadow-root` 里面，但是代码并没有执行，网络面板里也并没有显示 `js` 文件的的加载，这可能是因为页面加载完成后，在向文档中添加 `script` 标签也不会执行的原因
 
 ```javascript
 let testComponent = document.getElementById('component1')
