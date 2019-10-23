@@ -7,7 +7,7 @@ reduce() 方法接收一个函数作为累加器，数组中的每个值（从�
 > arr.reduce(callback(accumulator, currentValue[, index[, array]])[, initialValue])
 
 ### 参数 
-`callback` : 执行数组中每个值的函数，包含四个参数：  
+`callback` : 执行数组中每个值的函数，包含四个参数 ：    
 + accumulator : 累计器累计回调的返回值；它是上一次调用回调时返回的累计值，或 initialValue（见下面）`累计器`
 + currentValue : 数组中正在处理的元素；`当前值`
 + currentIndex(可选) : 数组中正在处理的元素的索引；`当前索引`
