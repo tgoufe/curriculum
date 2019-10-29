@@ -45,268 +45,42 @@ h2, p{color: red;}
 
 ##### 4-类和ID选择器
 
-:first-child与first-of-type
-
-:last-child与last-of-type
-
-> 小技巧 :only-child和:only-of-type可以用其它方法实现。
+ 除了元素，还有**类选择器**和 **ID 选择器**，它们允许以独立于文档元素的方式分配样式。 
 
 ```css
-:only-child{
-	style
-}
-//等于
-:first-child:last-child{
-	style
-}
+.warning {font-weight: bold;}
 ```
 
 ```
-:only-of-type{
-	style
-}
-//等于
-:first-of-type:last-of-type{
-	style
-}
+#first-para {font-weight: bold;}
 ```
 
-##### 5-选择每第n个子元素或某种元素
+### css权重(优先级)
 
-:nth-child与:nth-of-type(an+b)	首先查找当前所有匹配的兄弟元素，
+ 优先级就是分配给指定的CSS声明的一个权重，它由匹配的选择器中的每一种选择器类型的数值 决定。
 
-:nth-last-child与:nth-last-of-type(an+b)	他们的用法跟上面一样，不过顺序是倒序开始。
+#### CSS优先级
 
-#### 2、否定伪类
+内联(style="") > 内联样式表(<style>) | 外链样式表(<link>) > 浏览器缺省
 
-:not()选择不匹配的东西
+>  **内联样式表**和**外链样式表**取决于定义的位置顺序。 
 
-> 小技巧 列表导航优化代码
-```html
-<ul>
-	<li>首页</li>
-	<li>新闻</li>
-	<li>关于</li>
-	<li>分享</li>
-	<li>联系</li>
-</ul>
-```
-```css
-li{
-  border-bottom:1px solid blue
-}
-li:last-child{
-  border-bottom:0;
-}
-```
-:not()属性
-```css
-li:not(:last-child){
-	border-bottom:1px solid blue
-}
-```
+#### 选择器优先级
 
-:not()伪类不能嵌套，可以串联使用。
+ID选择器 > 类选择器 | 属性选择器 | 伪类选择器 > 元素选择器
 
-#### 3、伪元素选择符
+>  **!important**: 当在一个样式声明中使用一个!important 规则时，此声明将覆盖任何其他声明
 
-:before与:after在元素之前或之后插入某些内容。
+内联元素： 1, 0, 0, 0
 
-伪元素要配合content属性一起使用。
+ID选择器 0, 1, 0, 0
 
-content属性可以直接利用attr获取元素的属性。
+类选择器，属性选择， 伪类 0, 0, 1, 0
 
-```css
-img:after{
-  content:attr(alt);
-}
-```
+元素，伪元素 0, 0, 0, 1
 
-> 小技巧 这里会有一个被问到最多的问题，那就是伪类与伪元素的区别。
 
-**伪类**
 
-字面意思假的类。伪类其实是弥补了CSS选择器的不足，用来更方便地获取信息。
 
-**伪元素**
-
-字面意思假的元素。伪元素本质上是创建了一个虚拟容器(元素)，我们可以在其中添加内容或样式。
-
-> 小技巧 伪元素单冒号与双冒号的区别。
-
-比如 :before与::before
-
-1. 二者写法是等效的，都表示伪元素。
-2. :before是CSS2的写法，::before是CSS3的写法。
-3. :before的兼容性比::before兼容性好，但是H5开发中建议使用::before
-
-综合实例
-
-分页
-
-```html
-<template>
-    <div class="page flex-container center margint20">
-        <div pageName="上一页"></div>
-        <p v-for="($index,item) in 5" v-text="$index" :page="$index === 3 && 'current'"></p>
-        <div pageName="下一页"></div>
-    </div>
-</template>
-<style>
-.page{
-  .current{
-    background: red;
-    color:white;
-  }
-  &>*{
-    border:1px solid red;
-    margin:0 5px;
-  }
-  text-align: center;
-  font-size: 12px;
-  color:red;
-  &>div{
-    width:60px;
-    height:30px;
-    line-height: 30px;
-    border:1px red solid;
-    &:first-of-type{
-      border-radius:30px 2px 2px 30px;
-      &:after{
-        content:'上一页'
-      }
-    }
-    &:last-of-type{
-      border-radius:2px 30px 30px 2px;
-      &:after{
-        content:'下一页'
-      }
-    }
-  }
-  &>p{
-    border-radius:2px;
-    width:30px;
-    height:30px;
-    line-height: 30px;
-    &[page='current']{
-      @extend .current;
-    }
-    &:only-of-type{
-      @extend .current;
-      // @at-root .page>div{
-      //   display:none;
-      // }
-    }
-
-  }
-  &>*:hover{
-    @extend .current;
-  }
-}
-</style>
-```
-
-时间树
-
-```html
-<template>
-	<div class="timeTree margint50">
-        <div class="times" v-for="item in 3">
-            <div class="clearfix">
-                <div><img src="../../assets/bingshanbear.svg" width="30" alt=""></div>
-                <div>
-                    <h1>标题</h1>
-                    <p class="text-dark">内容</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
-<style>
-.timeTree{
-  position: relative;
-  &:before,&:after{
-    position:absolute;
-    content: '';
-    width:40px;
-    height:40px;
-    z-index: 1;
-    left: 50%;
-    margin-left: -20px;
-  }
-  &:before{
-    top: -30px;
-    background: url('../../assets/start.svg') no-repeat;
-    background-size: 100% auto;
-  }
-  &:after{
-    bottom:10px;
-    background: url('../../assets/end.svg') no-repeat;
-    background-size: 100% auto;
-  }
-  &:after{}
-  .times{
-    position:relative;
-    padding:50px;
-    &:after,&:before{
-      position:absolute;
-      content: '';
-      width:50%;
-      height:100%;
-      border:10px solid currentColor;
-      top:0;
-    }
-    &:before{
-      border-width:20px;
-    }
-    &:nth-of-type(odd){
-      .clearfix div:first-child{
-        float:left;
-      }
-      .clearfix div:last-child{
-        float:right;
-      }
-      &:after,&:before{
-        left:0;
-        border-top-left-radius:50px;
-        border-bottom-left-radius:50px;
-        border-right:0;
-      }
-    }
-    &:nth-of-type(even){
-      .clearfix div:first-child{
-        float:right;
-      }
-      .clearfix div:last-child{
-        float:left;
-      }
-      &:after,&:before{
-        right:0;
-        border-top-right-radius:50px;
-        border-bottom-right-radius:50px;
-        border-left:0;
-      }
-    }
-    &:not(:first-of-type){
-      margin-top:-20px;
-    }
-    &:nth-of-type(1){
-      color:rgba(255,0,0,.5);
-    }
-    &:nth-of-type(2){
-      color:rgba(0,0,255,.5);
-    }
-    &:nth-of-type(3){
-      color:rgba(0,128,0,.5);
-    }
-    &:nth-of-type(4){
-      color:orange;
-    }
-  }
-  
-}
-</style>
-```
 
 [^]: 本示例采用cmui样式库，有兴趣可以访问下载
