@@ -37,23 +37,23 @@ tags:
 <tg-header></tg-header>
 <script>
 class TgHeader extends HTMLElement{
-	constructor(){
-		super();
-	}
-	connectedCallback(){
-		console.log('connected', this);
-		this.innerHTML = this.template;
-	}
-	disconnectedCallback(){
-		console.log('disconnected');
-	}
+    constructor(){
+        super();
+    }
+    connectedCallback(){
+        console.log('connected', this);
+        this.innerHTML = this.template;
+    }
+    disconnectedCallback(){
+        console.log('disconnected');
+    }
     adoptedCallback(){
         console.log('adopted');
     }
 
-	get template(){
-		return `<div>header</div>`;
-	}
+    get template(){
+        return `<div>header</div>`;
+    }
 }
 
 customElements.define('tg-header', TgHeader);    
@@ -67,9 +67,9 @@ class TgContent extends HTMLParagraphElement{
     constructor(){
         super();
     }
-	connectedCallback(){
-		this.innerHTML += '[tg]';
-	}
+    connectedCallback(){
+        this.innerHTML += '[tg]';
+    }
 }                                                              
 
 customElements.define('tg-content', TgContent, {extends: 'p'});
@@ -91,26 +91,26 @@ customElements.define('tg-content', TgContent, {extends: 'p'});
 
 ```javascript
 class TgMain extends HTMLElement{
-	constructor(){
-		super();
+    constructor(){
+        super();
 
-		this.className = this.getAttribute('theme');
-	}
+        this.className = this.getAttribute('theme');
+    }
 
-	connectedCallback(){
-		console.log('tg-main connected');
-	}
+    connectedCallback(){
+        console.log('tg-main connected');
+    }
 
-	attributeChangedCallback(name, oldVal, newVal){
-		console.log(`${name} 从 ${oldVal} 变为 ${newVal}`);
+    attributeChangedCallback(name, oldVal, newVal){
+        console.log(`${name} 从 ${oldVal} 变为 ${newVal}`);
 
-		if( name === 'theme' ){
-			this.className = newVal;
-		}
-	}
+        if( name === 'theme' ){
+            this.className = newVal;
+        }
+    }
 
-	static get observedAttributes(){
-		return ['theme', 'code'];
-	}
+    static get observedAttributes(){
+        return ['theme', 'code'];
+    }
 }
 ```
