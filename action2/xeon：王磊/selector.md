@@ -1,6 +1,6 @@
 ---
-title: css 伪类
-date: 2019-09-07 16:30:00
+title: css 选择器
+date: 2019-10-27 16:30:00
 tags: css css3
 categories: css css3
 ---
@@ -9,13 +9,11 @@ categories: css css3
 
 <!--more-->
 
-### css选择器
+# css选择器
 
-我们知道比较常见的id、class、后台选择器这些基本的css选择器。但这并不是css的全部。下面向大家系统的解析css中30个最常用的选择器，包括我们最头痛的浏览器兼容性问题。掌握了它们，才能真正领略css的巨大灵活性。
+我们知道比较常见的id、class、后代选择器这些基本的css选择器。但这并不是css的全部。今天用几个例子来加深了解选择器与css权重的重要性。
 
-#### 1、选择器
-
-##### 1-元素选择器
+## 1-元素选择器
 
 元素选择器通常都是 HTML 元素。（但也有例外，比如在XML文档）。
 
@@ -25,7 +23,7 @@ h1 {color: gray;}
 h2 {color: silver;}
 ```
 
-##### 2-群组选择器
+## 2-群组选择器
 
 选择器之间以`,`（逗号）分隔。
 
@@ -33,280 +31,105 @@ h2 {color: silver;}
 h2, p{color: red;}
 ```
 
-##### 3-通配选择器
+## 3-通配选择器
 
 `*`匹配所有元素。
-
-> 文档中所有元素都显示为红色。
 
 ```css
 *{color: red;}
 ```
 
-##### 4-类和ID选择器
+## 4-类和ID选择器
 
-:first-child与first-of-type
-
-:last-child与last-of-type
-
-> 小技巧 :only-child和:only-of-type可以用其它方法实现。
+除了元素，还有**类选择器**和 **ID 选择器**，它们允许以独立于文档元素的方式分配样式。 
 
 ```css
-:only-child{
-	style
-}
-//等于
-:first-child:last-child{
-	style
-}
+.warning {font-weight: bold;}
 ```
 
-```
-:only-of-type{
-	style
-}
-//等于
-:first-of-type:last-of-type{
-	style
-}
+```css
+#first-para {font-weight: bold;}
 ```
 
-##### 5-选择每第n个子元素或某种元素
+## 5-属性选择器
 
-:nth-child与:nth-of-type(an+b)	首先查找当前所有匹配的兄弟元素，
+属性选择器有四种基本类型：简单属性选择器、准确属性值选择器、部分匹配属性选择器和特定属性选择器。
 
-:nth-last-child与:nth-last-of-type(an+b)	他们的用法跟上面一样，不过顺序是倒序开始。
+简单属性选择器
 
-#### 2、否定伪类
+```css
+h1[class] {color: silver;}
+```
+准确属性值选择器
+```css
+h1[class=="moons"] {color: silver;}
+```
+部分匹配属性选择器
+| 类型           | 描述                                                         |
+| :------------- | :----------------------------------------------------------- |
+| `[foo~="bar"]` | 选择所有带有`foo`属性、且`foo`属性被空白分隔的单词列表中含有单词`bar`的元素。 |
+| `[foo*="bar"]` | 选择所有带有`foo`属性、且`foo`属性值中含有子串`bar`的元素。  |
+| `[foo^="bar"]` | 选择所有带有`foo`属性、且`foo`属性值以`bar`开头的元素。      |
+| `[foo$="bar"]` | 选择所有带有`foo`属性、且`foo`属性值以`bar`结束的元素。      |
+| `[foo|="bar"]` | 选择所有带有`foo`属性、且`foo`属性值以`bar`开头后接一个短线（`U+002D`）或者属性值是`bar`的元素。 |
 
-:not()选择不匹配的东西
-
-> 小技巧 列表导航优化代码
+基于部分属性值的选择器中的特定属性选择器
+```css
+*[lang|="en"] {color: white;}
+```
+这条规则会选择任何lang属性等于en或者以en-开头的元素。因此，下面的示例中前三个标签会被选中，而后两个则不会：
 ```html
-<ul>
-	<li>首页</li>
-	<li>新闻</li>
-	<li>关于</li>
-	<li>分享</li>
-	<li>联系</li>
-</ul>
-```
-```css
-li{
-  border-bottom:1px solid blue
-}
-li:last-child{
-  border-bottom:0;
-}
-```
-:not()属性
-```css
-li:not(:last-child){
-	border-bottom:1px solid blue
-}
+<h1 lang="en">Hello!</h1>  
+<p lang="en-us">Greetings!</p>  
+<div lang="en-au">G'day!</div>  
+<p lang="fr">Bonjour!</p> 
+<h4 lang="cy-en">Jrooana!</h4>
 ```
 
-:not()伪类不能嵌套，可以串联使用。
-
-#### 3、伪元素选择符
-
-:before与:after在元素之前或之后插入某些内容。
-
-伪元素要配合content属性一起使用。
-
-content属性可以直接利用attr获取元素的属性。
+在中括号关闭之前使用`i`允许选择器匹配属性值的时候忽略大小写，无视文档语言的规则。
 
 ```css
-img:after{
-  content:attr(alt);
-}
+a[href$='.PDF' i]
 ```
 
-> 小技巧 这里会有一个被问到最多的问题，那就是伪类与伪元素的区别。
+# css权重(优先级)
 
-**伪类**
+优先级就是分配给指定的CSS声明的一个权重，它由匹配的选择器中的每一种选择器类型的数值决定。
 
-字面意思假的类。伪类其实是弥补了CSS选择器的不足，用来更方便地获取信息。
+> css权重关系到你的css规则是怎样显示的
 
-**伪元素**
+## CSS优先级
 
-字面意思假的元素。伪元素本质上是创建了一个虚拟容器(元素)，我们可以在其中添加内容或样式。
+内联(style="") > 内联样式表(&lt;style&gt;) | 外链样式表(&lt;link&gt;) > 浏览器缺省
 
-> 小技巧 伪元素单冒号与双冒号的区别。
+>  **内联样式表**和**外链样式表**取决于定义的位置顺序。 
 
-比如 :before与::before
+## 选择器优先级
 
-1. 二者写法是等效的，都表示伪元素。
-2. :before是CSS2的写法，::before是CSS3的写法。
-3. :before的兼容性比::before兼容性好，但是H5开发中建议使用::before
+ID选择器 > 类选择器 | 属性选择器 | 伪类选择器 > 元素选择器
 
-综合实例
+>  **!important**: 当在一个样式声明中使用一个!important 规则时，此声明将覆盖任何其他声明
 
-分页
+内联元素  1, 0, 0, 0
 
-```html
-<template>
-    <div class="page flex-container center margint20">
-        <div pageName="上一页"></div>
-        <p v-for="($index,item) in 5" v-text="$index" :page="$index === 3 && 'current'"></p>
-        <div pageName="下一页"></div>
-    </div>
-</template>
-<style>
-.page{
-  .current{
-    background: red;
-    color:white;
-  }
-  &>*{
-    border:1px solid red;
-    margin:0 5px;
-  }
-  text-align: center;
-  font-size: 12px;
-  color:red;
-  &>div{
-    width:60px;
-    height:30px;
-    line-height: 30px;
-    border:1px red solid;
-    &:first-of-type{
-      border-radius:30px 2px 2px 30px;
-      &:after{
-        content:'上一页'
-      }
-    }
-    &:last-of-type{
-      border-radius:2px 30px 30px 2px;
-      &:after{
-        content:'下一页'
-      }
-    }
-  }
-  &>p{
-    border-radius:2px;
-    width:30px;
-    height:30px;
-    line-height: 30px;
-    &[page='current']{
-      @extend .current;
-    }
-    &:only-of-type{
-      @extend .current;
-      // @at-root .page>div{
-      //   display:none;
-      // }
-    }
+ID选择器  0, 1, 0, 0
 
-  }
-  &>*:hover{
-    @extend .current;
-  }
-}
-</style>
-```
+类选择器，属性选择，伪类  0, 0, 1, 0
 
-时间树
+元素，伪元素  0, 0, 0, 1
 
-```html
-<template>
-	<div class="timeTree margint50">
-        <div class="times" v-for="item in 3">
-            <div class="clearfix">
-                <div><img src="../../assets/bingshanbear.svg" width="30" alt=""></div>
-                <div>
-                    <h1>标题</h1>
-                    <p class="text-dark">内容</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
+## 演示图
 
-<style>
-.timeTree{
-  position: relative;
-  &:before,&:after{
-    position:absolute;
-    content: '';
-    width:40px;
-    height:40px;
-    z-index: 1;
-    left: 50%;
-    margin-left: -20px;
-  }
-  &:before{
-    top: -30px;
-    background: url('../../assets/start.svg') no-repeat;
-    background-size: 100% auto;
-  }
-  &:after{
-    bottom:10px;
-    background: url('../../assets/end.svg') no-repeat;
-    background-size: 100% auto;
-  }
-  &:after{}
-  .times{
-    position:relative;
-    padding:50px;
-    &:after,&:before{
-      position:absolute;
-      content: '';
-      width:50%;
-      height:100%;
-      border:10px solid currentColor;
-      top:0;
-    }
-    &:before{
-      border-width:20px;
-    }
-    &:nth-of-type(odd){
-      .clearfix div:first-child{
-        float:left;
-      }
-      .clearfix div:last-child{
-        float:right;
-      }
-      &:after,&:before{
-        left:0;
-        border-top-left-radius:50px;
-        border-bottom-left-radius:50px;
-        border-right:0;
-      }
-    }
-    &:nth-of-type(even){
-      .clearfix div:first-child{
-        float:right;
-      }
-      .clearfix div:last-child{
-        float:left;
-      }
-      &:after,&:before{
-        right:0;
-        border-top-right-radius:50px;
-        border-bottom-right-radius:50px;
-        border-left:0;
-      }
-    }
-    &:not(:first-of-type){
-      margin-top:-20px;
-    }
-    &:nth-of-type(1){
-      color:rgba(255,0,0,.5);
-    }
-    &:nth-of-type(2){
-      color:rgba(0,0,255,.5);
-    }
-    &:nth-of-type(3){
-      color:rgba(0,128,0,.5);
-    }
-    &:nth-of-type(4){
-      color:orange;
-    }
-  }
-  
-}
-</style>
-```
+![图1](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/specificity.png)
+
+# 实例
+
+## 属性选择器
+
+![图2](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/selector_1.png)
+
+ ## css兄弟选择器
+
+![图3](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/selector_2.png)
 
 [^]: 本示例采用cmui样式库，有兴趣可以访问下载
