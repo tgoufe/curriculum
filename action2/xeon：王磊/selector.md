@@ -1,6 +1,6 @@
 ---
-title: css 伪类
-date: 2019-09-07 16:30:00
+title: css 选择器
+date: 2019-10-27 16:30:00
 tags: css css3
 categories: css css3
 ---
@@ -96,4 +96,3 @@ ID选择器  0, 1, 0, 0
 ![图3](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/selector_2.png)
 
 [^]: 本示例采用cmui样式库，有兴趣可以访问下载
-
