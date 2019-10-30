@@ -9,11 +9,11 @@ categories: css css3
 
 <!--more-->
 
-### css选择器
+# css选择器
 
 我们知道比较常见的id、class、后代选择器这些基本的css选择器。但这并不是css的全部。今天用几个例子来加深了解选择器与css权重的重要性。
 
-#### 1-元素选择器
+## 1-元素选择器
 
 元素选择器通常都是 HTML 元素。（但也有例外，比如在XML文档）。
 
@@ -23,7 +23,7 @@ h1 {color: gray;}
 h2 {color: silver;}
 ```
 
-#### 2-群组选择器
+## 2-群组选择器
 
 选择器之间以`,`（逗号）分隔。
 
@@ -31,7 +31,7 @@ h2 {color: silver;}
 h2, p{color: red;}
 ```
 
-#### 3-通配选择器
+## 3-通配选择器
 
 `*`匹配所有元素。
 
@@ -39,7 +39,7 @@ h2, p{color: red;}
 *{color: red;}
 ```
 
-#### 4-类和ID选择器
+## 4-类和ID选择器
 
 除了元素，还有**类选择器**和 **ID 选择器**，它们允许以独立于文档元素的方式分配样式。 
 
@@ -51,7 +51,7 @@ h2, p{color: red;}
 #first-para {font-weight: bold;}
 ```
 
-#### 5-属性选择器
+## 5-属性选择器
 
 属性选择器有四种基本类型：简单属性选择器、准确属性值选择器、部分匹配属性选择器和特定属性选择器。
 
@@ -92,19 +92,19 @@ h1[class=="moons"] {color: silver;}
 a[href$='.PDF' i]
 ```
 
-### css权重(优先级)
+# css权重(优先级)
 
 优先级就是分配给指定的CSS声明的一个权重，它由匹配的选择器中的每一种选择器类型的数值决定。
 
 > css权重关系到你的css规则是怎样显示的
 
-#### CSS优先级
+## CSS优先级
 
 内联(style="") > 内联样式表(&lt;style&gt;) | 外链样式表(&lt;link&gt;) > 浏览器缺省
 
 >  **内联样式表**和**外链样式表**取决于定义的位置顺序。 
 
-#### 选择器优先级
+## 选择器优先级
 
 ID选择器 > 类选择器 | 属性选择器 | 伪类选择器 > 元素选择器
 
@@ -118,17 +118,17 @@ ID选择器  0, 1, 0, 0
 
 元素，伪元素  0, 0, 0, 1
 
-#### 演示图
+## 演示图
 
 ![图1](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/specificity.png)
 
-### 实例
+# 实例
 
-#### 属性选择器
+## 属性选择器
 
 ![图2](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/selector_1.png)
 
- #### css兄弟选择器
+ ## css兄弟选择器
 
 ![图3](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/selector_2.png)
 
