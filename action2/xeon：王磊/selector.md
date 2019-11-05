@@ -133,3 +133,17 @@ ID选择器  0, 1, 0, 0
 ![图3](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/selector_2.png)
 
 [^]: 本示例采用cmui样式库，有兴趣可以访问下载
+
+
+
+
+
+{{ $page }}
+
+{
+  "path": "./test.html",
+  "title": "Using Vue in Markdown",
+  "frontmatter": {}
+}
+
+{{ 1 + 1 }}
