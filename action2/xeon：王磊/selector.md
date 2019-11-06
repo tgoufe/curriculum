@@ -132,4 +132,9 @@ ID选择器  0, 1, 0, 0
 
 ![图3](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/selector_2.png)
 
-[^]: 本示例采用cmui样式库，有兴趣可以访问下载
+
+
+
+[本示例代码下载](https://github.com/xeon225/animation)
+
+[本示例采用cmui样式库，有兴趣可以访问下载](https://github.com/tgoufe/CyanMapleDesign)
