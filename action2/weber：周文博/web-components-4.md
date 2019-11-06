@@ -18,11 +18,11 @@ tags:
 
 `<template>` 标签，大家一定很眼熟，早在 `jQuery` 时代大家就以各种方式使用进行开发了，不过 `<template>` 标签那时还不是标准规范里的标签，直到 `HTML5` 规范的确立，现在又被应用到 `Web Components` 技术中
 
-> HTML内容模板（<template>）元素是一种用于保存客户端内容机制，该内容在加载页面时不会呈现，但随后可以(原文为 may be)在运行时使用JavaScript实例化。
+> HTML内容模板（&lt;template&gt;）元素是一种用于保存客户端内容机制，该内容在加载页面时不会呈现，但随后可以(原文为 may be)在运行时使用JavaScript实例化。
 
 以上是 `MDN` 上的描述，很符合对这个标签的直观印象
 
-`<template>` 标签对应的是 `HTMLTemplate` 对象，它除了标准属性外有一个额外的属性 `content`，这个属性是只读的，它是一个 `DocumentFragment` 类型的对象，包含了 `<template>` 标签下的 `DOM` 书。在浏览器中查看 `<template>` 标签，也可以看到一层 `#document-fragment`，然后才是 `HTML` 代码中 `<template>` 下的子标签
+`<template>` 标签对应的是 `HTMLTemplateElement` 对象，它除了标准属性外有一个额外的属性 `content`，这个属性是只读的，它是一个 `DocumentFragment` 类型的对象，包含了 `<template>` 标签下的 `DOM` 树。在浏览器中查看 `<template>` 标签，也可以看到一层 `#document-fragment`，然后才是 `HTML` 代码中 `<template>` 下的子标签
 
 具体使用示例：
 ```html
@@ -52,7 +52,7 @@ app.appendChild( document.getElementById('testTemplate').content.cloneNode(true)
 
 这个用过 `Vue` 的应该很熟悉了
 
-> HTML <slot> 元素 ，作为 Web Components 技术套件的一部分，是 Web 组件内的一个占位符。该占位符可以在后期使用自己的标记语言填充，这样您就可以创建单独的 DOM 树，并将它与其它的组件组合在一起。
+> HTML &lt;slot&gt; 元素 ，作为 Web Components 技术套件的一部分，是 Web 组件内的一个占位符。该占位符可以在后期使用自己的标记语言填充，这样您就可以创建单独的 DOM 树，并将它与其它的组件组合在一起。
 
 以上是 `MDN` 的描述
 
