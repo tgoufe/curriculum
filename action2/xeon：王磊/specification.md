@@ -103,7 +103,7 @@ categories: html css3
 
 1、设计开发页面的设计稿，或原型图。
 
-![图1](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/html5_1.png)
+![图1](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/html5_2.png)
 
 2、根据设计稿和是否需要响应式布局搭建html框架结构。
 
