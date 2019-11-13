@@ -279,3 +279,12 @@ for (let i = 0; i < prevChildren.length; i++) {
 ## 结语
 
 至此，第一个完整的`Diff`算法我们就讲解完毕了，这个算法就是`React`所采用的`Diff`算法。但该算法仍然存在可优化的空间，在下一次分享中继续讨论。
+
+
+<div style="display:none;">
+var style = document.createElement("style");
+style.type = "text/css";
+style.appendChild(document.createTextNode(".page p code,.page li code{background-color: #fff5f5!important;color: #ff502c!important;padding: .065em .4em!important;}"));
+var head = document.getElementsByTagName("head")[0];
+head.appendChild(style);
+</div>
