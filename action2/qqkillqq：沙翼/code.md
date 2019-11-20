@@ -123,10 +123,7 @@ const xprod = (list1, list2) =>
     return rs;
   }, []);
 
-const prod=(arr=[])=>arr.reduce((rs,item)=>rs.length?
-    [...rs,...rs.slice().map(i=>i.concat(item)),[item]]:
-    [[item]]
-,[])
+const prod=(arr=[])=>arr.reduce((rs,item)=>[...rs,...rs.slice().map(i=>i.concat(item)),[item]],[])
 ```
 
 
@@ -137,7 +134,7 @@ const prod=(arr=[])=>arr.reduce((rs,item)=>rs.length?
 
 ## includes
 
-使用~可以减少if中的判断
+这是一个小技巧，使用~可以减少if中对-1的判断，其实就是因为懒
 
 ```javascript
 const includes=(target,value)=>!!~target.indexOf(value)
