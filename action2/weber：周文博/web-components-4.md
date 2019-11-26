@@ -44,7 +44,7 @@ app.appendChild( document.getElementById('testTemplate').content.cloneNode(true)
 
 顺带一提，`<template>` 标签中可以加入 `<style>`、`<link>` 和 `<script>` 标签的，而且 `<link>` 和 `<script>` 标签引用的外部文件只有在加入文档中才进行加载，对比一下 `Vue` 框架中 `<template>` 中则不能添加 `<style>` 标签（当然这个比较并不合适。。。）
 
-`HTMLTemplate` 对象的 `children` 是一个空的 `HTMLCollection` 对象，但是输出 `innerHTML`，还是能获得在 `HTML` 代码中的子标签
+`HTMLTemplateElement` 对象的 `children` 是一个空的 `HTMLCollection` 对象，但是输出 `innerHTML`，还是能获得在 `HTML` 代码中的子标签
 
 修改 `innerHTML` 后，对应的 `#document-fragment` 中的内容也会变更，但是使用 `appendChild` 方法后，`#document-fragment` 中的内容却不会改变，再输出 `innerHTML` 时也不会输出 `appendChild` 方法添加的元素，但是 `children` 元素会显示它们
 

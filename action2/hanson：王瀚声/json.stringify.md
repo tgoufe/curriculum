@@ -1,3 +1,4 @@
+# 手动实现 JSON.stringify
 > JSON数据格式在我们日常的开发中，使用频率非常的高。无论是请求后端接口，返回的数据，还是后端同学要求前端传参格式，都离不开JSON。  
 ## MDN定义
 `JSON` 是一种语法，用来序列化对象、数组、数值、字符串、布尔值和 null 。它基于 `JavaScript` 语法，但与之不同：`JavaScript`不是`JSON`，`JSON`也不是`JavaScript`。  
