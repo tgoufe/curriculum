@@ -154,9 +154,7 @@ const clone=(target, map = new WeakMap())=>{
 
 ```javascript
 const once =(fn,rs,n=2)=>(...args)=>{
-  --n>0
-    ? rs=fn.apply(this,args)
-    : fn = undefined
+  --n>0? rs=fn.apply(this,args): fn = undefined
   return rs
 }
 ```
@@ -167,9 +165,7 @@ const once =(fn,rs,n=2)=>(...args)=>{
 
 ```javascript
 const before = (n,fn,rs)=>(...args)=>{
-  --n>0
-    ? rs=fn.apply(this,args)
-    : fn = undefined
+  --n>0? rs=fn.apply(this,args): fn = undefined
   return rs;
 }
 ```
@@ -180,9 +176,7 @@ const before = (n,fn,rs)=>(...args)=>{
 const before=(n, fn)=>{
   let rs;
   return function() {
-    --n>0
-    	? fn.apply(this, arguments)
-    	: fn = undefined
+    --n>0? rs=fn.apply(this, arguments): fn = undefined
     return rs;
   };
 }
@@ -202,8 +196,7 @@ const times = (num,fn=i=>i) =>Array.from({ length: num }).reduce((rs, _, index) 
 你肯定遇到过访问对象属性的时候报错的情况，这个简易版的get方法虽然不如lodash的强大，但是临时使用的时候非常nice
 
 ```javascript
-const get= ( obj, ...keys) => keys.reduce( ( a, b ) => ( a || { } )[ b ], obj );
-get(user,'info','address','city')
+const get= (obj,path,rs) => path.replace(/\[([^\[\]]*)\]/g, '.$1.').split('.').filter(t => t !== '').reduce((a,b) => a&&a[b],obj);
 ```
 
 ## 拓展数组方法到对象
