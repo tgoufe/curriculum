@@ -259,13 +259,13 @@ const powerset2=(arr=[])=>arr.reduce((rs,item)=>[...rs,...rs.slice().map(i=>i.co
 const xprod=(...lists)=>lists.reduce((rs,arrItem)=>rs.length
   ? rs.reduce((acc,item)=>arrItem.reduce((acc,value)=>acc.concat([[...item,value]]),acc),[])
   : arrItem,[''])
-xprod(['red','blue'],['36','37','38'],['男','女'])
+//xprod(['red','blue'],['36','37','38'],['男','女'])
 ```
 
 ## 数组全排列
 
 ```javascript
-const anagrams = str => {
+const stringPermutations = str => {
   if (str.length <= 2) return str.length === 2 ? [str, str[1] + str[0]] : [str];
   return str.split('').reduce((acc, letter, i) =>
     acc.concat(anagrams(str.slice(0, i) + str.slice(i + 1)).map(val => letter + val)), []);
@@ -282,6 +282,23 @@ const permutations = arr => {
 };
 //permutations([1,2,3]) => [ [ 2, 3, 1 ],[ 3, 2, 1 ],[ 1, 3, 2 ],[ 3, 1, 2 ],[ 1, 2, 3 ],[ 2, 1, 3 ] ]
 ```
+
+## 分组计算
+
+```javascript
+const groupBy = (arr, fn) =>
+  arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val, i) => {
+    acc[val] = (acc[val] || []).concat(arr[i]);
+    return acc;
+  }, {});
+const countBy = (arr, fn) =>
+  arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val) => {
+    acc[val] = (acc[val] || 0) + 1;
+    return acc;
+  }, {});
+```
+
+
 
 ## “真正”的数组乱序
 
@@ -364,6 +381,11 @@ const curry = (fn, arity = fn.length, ...args) =>
   arity <= args.length
     ? fn(...args)
     : curry.bind(null, fn, arity, ...args);
+const uncurry = (fn, n = 1) => (...args) => {
+  const next = acc => args => args.reduce((x, y) => x(y), acc);
+  if (n > args.length) throw new RangeError('Arguments too few!');
+  return next(fn)(args.slice(0, n));
+};
 ```
 
 ## 计算所有位数之和
@@ -386,5 +408,77 @@ const fill0=(value,len=1)=>(Array(len).join(0)+value).slice(-Math.max(len,value.
 
 ```javascript
 const fill0=(value,len)=>`${value}`.padStart(len,0)
+```
+
+## url参数互转
+
+```javascript
+const objectToQueryString = queryParameters => {
+  return queryParameters
+    ? Object.entries(queryParameters).reduce((queryString, [key, val], index) => {
+        const symbol = index === 0 ? '?' : '&';
+        queryString += typeof val === 'string' ? `${symbol}${key}=${val}` : '';
+        return queryString;
+      }, '')
+    : '';
+};
+const getURLParameters = url =>
+  (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
+    (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a),
+    {}
+  );
+```
+
+注：获取URL参数的时候如果存在单页哈希会出现问题。
+
+## 驼峰与连字符互转
+
+```javascript
+const toKebabCase = str =>
+  str &&
+  str
+    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+    .map(x => x.toLowerCase())
+    .join('-');
+const toCamelCase = str => {
+  let s =
+    str &&
+    str
+      .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+      .map(x => x.slice(0, 1).toUpperCase() + x.slice(1).toLowerCase())
+      .join('');
+  return s.slice(0, 1).toLowerCase() + s.slice(1);
+};
+```
+
+
+
+## HTML正反编码
+
+```javascript
+const escapeHTML = str =>
+  str.replace(
+    /[&<>'"]/g,
+    tag =>
+      ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag)
+  );
+const unescapeHTML = str =>
+  str.replace(
+    /&amp;|&lt;|&gt;|&#39;|&quot;/g,
+    tag =>
+      ({
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&#39;': "'",
+        '&quot;': '"'
+      }[tag] || tag)
+  );
 ```
 
