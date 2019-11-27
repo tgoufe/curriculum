@@ -270,23 +270,16 @@ const anagrams = str => {
   return str.split('').reduce((acc, letter, i) =>
     acc.concat(anagrams(str.slice(0, i) + str.slice(i + 1)).map(val => letter + val)), []);
 };
-const permutations=arr=>{
-  if(arr.length <= 2) return arr.length===2?[[arr[0],arr[1]],[arr[1],arr[0]]]:arr
-  else {
-    var temp = [];
-    for (var i = 0; i < arr.length; i++) {
-      var save = arr[i];
-      arr.splice(i, 1);
-      var res = permutations(arr);
-      arr.splice(i, 0, save);
-      for (var j = 0; j < res.length; j++) {
-        res[j].push(arr[i]);
-        temp.push(res[j]);
-      }
-    }
-    return temp;
-  }
-}
+const permutations = arr => {
+  if (arr.length <= 2) return arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr;
+  return arr.reduce(
+    (acc, item, i) =>
+      acc.concat(
+        permutations([...arr.slice(0, i), ...arr.slice(i + 1)]).map(val => [item, ...val])
+      ),
+    []
+  );
+};
 //permutations([1,2,3]) => [ [ 2, 3, 1 ],[ 3, 2, 1 ],[ 1, 3, 2 ],[ 3, 1, 2 ],[ 1, 2, 3 ],[ 2, 1, 3 ] ]
 ```
 
