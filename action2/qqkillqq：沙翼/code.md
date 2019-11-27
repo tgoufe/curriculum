@@ -71,16 +71,18 @@ function getFolders(filePath, deep = true) {
 
 ```javascript
 const times = (num,fn=i=>i) =>Array.from({ length: num }).reduce((rs, _, index) =>rs.concat(fn(index)), []);
-
 ```
 
 
 
 ## get
 
+```javascript
+const get= ( obj, ...keys) => keys.reduce( ( a, b ) => ( a || { } )[ b ], obj );
+get(user,'info','address','city')
+```
 
 
-## set
 
 
 
@@ -98,9 +100,19 @@ const flatten = (list) => list.reduce((acc, value) => acc.concat(value), []);
 
 比较骚但是效率奇高的操作
 
+```javascript
+const flatten = (list) =>JSON.parse(`[${JSON.stringify(list).replace(/\[|\]/g, '')}]`);
+```
 
+注：此方法无法处理null，undefined和循环引用等问题
 
 ## 类型判断
+
+```javascript
+const is=(type,obj)=>new RegExp(type,'i').test(Object.prototype.toString.call(obj).slice(8,-1))
+is('string','sdfsdfds')//true
+is('array',[])//true
+```
 
 
 
@@ -112,20 +124,22 @@ const inorderTraversal=root=>(root===null)?[...inorderTraversal(root.left),root.
 
 
 
-## 数组中的所有组合
+## 数组组合
 
-有两种常见操作，一种是获取一个数组里面所有的组合形式，另一种是获取多个数组中的交叉组合
+## 获取数组里面所有的组合
 
 ```javascript
-const xprod = (list1, list2) =>
-  list1.reduce((rs, list1Item) => {
-    list2.forEach((list2Item) => {
-      acc.push([list1Item, list2Item]);
-    });
-    return rs;
-  }, []);
-
 const prod=(arr=[])=>arr.reduce((rs,item)=>[...rs,...rs.slice().map(i=>i.concat(item)),[item]],[])
+prod([1,2,3]) //[ [ 1 ], [ 1, 2 ], [ 2 ], [ 1, 3 ], [ 1, 2, 3 ], [ 2, 3 ], [ 3 ] ]
+```
+
+## 获取多个数组的交叉组合
+
+```javascript
+const xprod=(...lists)=>lists.reduce((rs,arrItem)=>rs.length
+  ? rs.reduce((acc,item)=>arrItem.reduce((acc,value)=>acc.concat([[...item,value]]),acc),[])
+  : arrItem,[''])
+xprod(['red','blue'],['36','37','38'],['男','女'])
 ```
 
 
