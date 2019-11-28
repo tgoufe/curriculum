@@ -305,7 +305,7 @@ const groupBy = (arr, fn) => arr.map(typeof fn === 'function' ? fn : val => val[
 const countBy = (arr, fn) => arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val) => (acc[val] = (acc[val] || 0) + 1 , acc), {})
 ```
 
-常见的需求：
+常见的需求：和上面差不多
 
 ## “真正”的数组乱序
 
@@ -357,7 +357,7 @@ ps：经常有人搞不清by和with的区别，by是先使用函数进行处理�
 <span style="color:red">特别提醒</span>：[30s](https://github.com/30-seconds/30-seconds-of-code)（包括有很多抄来的文章）提供的differenceBy会有下面几个问题，使用的时候一定要注意
 
 1. 一次只能处理两个数组
-2. by方法会返回被回调函数修改过的结果，这一定不是你想要的，我也不清楚作者为何这么写，因为在对称过滤symmetricDifferenceBy的源码中不存在这个问题
+2. by方法会返回被回调函数修改过的结果，这一定不是你想要的，我不清楚作者为什么这么写，因为在对称过滤symmetricDifferenceBy和交集过滤intersectionBy的源码中不存在这个问题
 3. 不传回调函数的时候会报错
 
 以上这些问题在lodash和本文给你提供的片段中都不存在
@@ -367,20 +367,27 @@ ps：经常有人搞不清by和with的区别，by是先使用函数进行处理�
 有差异过滤就一定有交集过滤，需求和实现都差不多，就不多描述了，同样帮你处理好了多数组和默认函数的情况。
 
 ```javascript
-const intersection = (a, b) => {
-  const s = new Set(b);
-  return a.filter(x => s.has(x));
+const intersection = (...args) => args.reduce((pre,next)=>pre.filter(x=>new Set(next).has(x)))
+
+
+const intersectionBy = (...args) => {
+  let lastArg=args[args.length - 1]
+  let fn=typeof lastArg === 'function' ? lastArg : i=>i
+  return args.reduce((pre,next)=>typeof next ==='function'
+    ? pre
+    : pre.filter(x=>new Set(next.map(fn)).has(fn(x))))
 };
 
-const intersectionBy = (a, b, fn) => {
-  const s = new Set(b.map(fn));
-  return a.filter(x => s.has(fn(x)));
-};
-
-const intersectionWith = (a, b, comp) => a.filter(x => b.findIndex(y => comp(x, y)) !== -1);
+const intersectionWith = (...args) => {
+  let lastArg=args[args.length - 1]
+  let fn=typeof lastArg === 'function' ? lastArg : (a,b)=>b
+  return args.reduce((pre,next)=>typeof next ==='function'
+    ? pre
+    : pre.filter(a => ~next.findIndex(b => fn(a, b))))
+}
 ```
 
-
+我自己使用的时候会把上面这6个函数合并成一个函数fuckJava(arrlist,fn,b=true)，然后通过回调的参数和布尔类型的true false来实现对应的功能，不过不建议在项目里这样使用，因为其他开发人员可能会弄乱，关于名字，你可以想想什么时候你会用到这个函数。感兴趣的可以自己封装一下。
 
 ## 限定范围随机数
 
@@ -507,8 +514,6 @@ const luhnCheck = num => {
 };
 ```
 
-
-
 ## url参数互转
 
 ```javascript
@@ -522,7 +527,7 @@ const objectToQueryString = queryParameters => queryParameters
 const getURLParameters = url => (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce( (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a), {} );
 ```
 
-注：获取URL参数的时候如果存在单页哈希会出现问题。
+注：获取URL参数的时候如果存在单页哈希参数会出现问题。
 
 ## 驼峰与连字符互转
 
@@ -545,6 +550,8 @@ const toCamelCase = str => {
 这两个方法在动态生成样式表的时候非常有用
 
 ## HTML正反编码
+
+xss攻击了解一下
 
 ```javascript
 const escapeHTML = str =>
@@ -596,4 +603,53 @@ const getFolders=(filePath, deep = true)=>fs.readdirSync(filePath).reduce((rs, i
 
 功能：返回一个数组，包含文件或文件夹的路径和名称，这两个属性是最常用的，如果需要其他的可以自行添加
 
-https://juejin.im/post/5da1a04ae51d45783d6122bf#heading-77
+## 页面滚动
+
+```javascript
+const getScrollPosition = () =>document.documentElement.scrollTop || document.body.scrollTop
+const scrollTop = (pos=0) => {
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c > pos) {console.log(c)
+    window.requestAnimationFrame(()=>scrollTop(pos));
+    window.scrollTo(0, c - c / 8);
+  }
+};
+const scrollBottom = (pos=0) => {
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c < pos-8) {console.log(c,pos)
+    window.requestAnimationFrame(()=>scrollBottom(pos));
+    window.scrollTo(0, c + (pos - c) / 8);
+  }
+};
+const scrollTo = (pos)=>{
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c > pos) {
+    scrollTop(pos)
+  }else if(c<pos){
+    scrollBottom(pos)
+  }
+}
+scrollTo(400); //自己调整速度
+```
+
+## 设备检测
+
+```javascript
+const isMoble=()=>/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+```
+
+## 获取滚动位置
+
+```javascript
+const getScrollPosition = (el = window) => ({
+  x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
+  y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop
+});
+```
+
+## 判断浏览器环境
+
+```javascript
+const isBrowser = () => ![typeof window, typeof document].includes('undefined');
+```
+
