@@ -8,7 +8,7 @@
 
 ![](./12.png)
 
-`React`中的`Difff`会这样操作：
+`React`中的`Diff`会这样操作：
 
 ![](./17.png)
 
@@ -345,41 +345,11 @@ while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx){
 
 ## 添加新元素
 
-商界前文，当双端比较没有找到复用节点时，会遍历旧节点寻找与新前节点key相同的旧节点索引`idxInOld`,当`idxInOld`没有被找到时，则可以认为这个新前节点就是新增的节点：
+上接前文，当双端比较没有找到复用节点时，会遍历旧节点寻找与新前节点key相同的旧节点索引`idxInOld`,当`idxInOld`没有被找到时，则可以认为这个新前节点就是新增的节点：
 
 ![](./28.png)
 
 代码如下：
-
-
-```js
-//新前节点在 oldChildren 中的位置
-const idxInOld = prevChildren.findIndex(node=>node && node.key === newStartVNode.key);
-//找到
-if(idxInOld >= 0){
-    //需要移动的旧节点
-    const vNodeToMove = prevChildren[idxInOld];
-    //先更新
-    patch(vNodeToMove,newStartVNode,container);
-    //移动DOM
-    insertBefore(container,vNodeToMove.el,oldStartVNode.el)
-    //已移动的 VNode 设置为 undefined
-    prevChildren[idxInOld] = undefined;
-
-    newStartIdx = newStartIdx + 1
-    newStartVNode = nextChildren[newStartIdx]
-}
-//没找到
-else{
-    //...
-}
-```
-
-需要注意的是，由于我们找到的旧节点的DOM已经被移动，所以我们将该节点设置为`undefined`,并且将`newStartIdx`下移一位：
-
-![](./27.png)
-
-由于旧节点中出现了undefined，所以在接下来的比较的过程中，`oldStartVNode`或`oldEndVNode`两者之一可能是`undefined`，此时说明该节点已经被处理了，可以跳过这一位置：
 
 ```js
 while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx){
@@ -428,9 +398,15 @@ while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx){
 
 ![](./29.png)
 
+---
+
 ![](./30.png)
 
+---
+
 ![](./31.png)
+
+---
 
 ![](./32.png)
 
@@ -454,7 +430,11 @@ if (oldEndIdx < oldStartIdx) {
 
 ![](./33.png)
 
+---
+
 ![](./34.png)
+
+---
 
 ![](./35.png)
 

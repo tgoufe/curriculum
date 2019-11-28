@@ -114,7 +114,7 @@ for (let i = 0; i < nextChildren.length; i++) {
 
 先看一个不需要移动的例子：
 
-![](11.png)
+![](./11.png)
 
 + 取出`新children`的第一个节点，即`li-a`，并尝试在`旧children`中寻找 `li-a`，结果是我们找到了，并且`li-a`在`旧children`中的索引为`0`。
 + 取出`新children`的第二个节点，即`li-b`，并尝试在`旧children`中寻找 `li-b`，也找到了，并且`li-b`在`旧children`中的索引为`1`。
@@ -124,7 +124,7 @@ for (let i = 0; i < nextChildren.length; i++) {
 
 再看一个需要移动的例子：
 
-![](12.png)
+![](./12.png)
 
 + 取出`新children`的第一个节点，即`li-c`，并尝试在`旧children`中寻找 `li-c`，结果是我们找到了，并且`li-c`在`旧children`中的索引为`2`。
 + 取出`新children`的第二个节点，即`li-a`，并尝试在`旧children`中寻找 `li-a`，也找到了，并且`li-a`在`旧children`中的索引为`0`。
@@ -165,11 +165,11 @@ for (let i = 0; i < nextChildren.length; i++) {
 
 现在我们已经有办法找到需要移动的节点了，接下来要解决的问题就是：应该如何移动这些节点？
 
-![](12.png)
+![](./12.png)
 
 `新children`中的第一个节点是`li-c`，它在`旧children`中的索引为`2`，由于`li-c`是`新children`中的第一个节点，所以它始终都是不需要移动的，只需要调用`patch函数`更新即可，如下图：
 
-![](13.png)
+![](./13.png)
 
 `li-c`节点更新完毕，接下来是`新children`中的第二个节点`li-a`，它在`旧children`中的索引是`0`，由于 0 < 2 所以`li-a`是需要移动的节点，那应该怎么移动呢？很简单，`新children`中的节点顺序实际上就是更新完成之后，节点应有的最终顺序，通过观察`新children`可知，`新children`中`li-a`节点的前一个节点是`li-c`，所以我们的移动方案应该是：把`li-a`节点对应的`真实 DOM`移动到`li-c`节点所对应`真实DOM`的后面。
 
@@ -201,14 +201,14 @@ for (let i = 0; i < nextChildren.length; i++) {
 }
 ```
 
-![](14.png)
+![](./14.png)
 
 
 ## 添加新元素
 
 在上面的讲解中，我们一直忽略了一个问题，即`新children`中可能包含那些不能够通过移动来完成更新的节点，例如`新children`中包含了一个全新的节点，这意味着在`旧children`中是找不到该节点的，如下图所示：
 
-![](15.png)
+![](./15.png)
 
 节点`li-d`在`旧的children`中是不存在的，所以当我们尝试在`旧的children`中寻找`li-d`节点时，是找不到可复用节点的，这时就没办法通过移动节点来完成更新操作，所以我们应该使用`mount`函数将`li-d`节点作为全新的`VNode`挂载到合适的位置。
 
@@ -249,7 +249,7 @@ for (let i = 0; i < nextChildren.length; i++) {
 
 除了要将全新的节点添加到容器元素之外，我们还应该把已经不存在了的节点移除，如下图所示：
 
-![](16.png)
+![](./16.png)
 
 可以看出，`新的children`中已经不存在`li-c`节点了，所以我们应该想办法将`li-c`节点对应的`真实DOM`从容器元素内移除。
 
