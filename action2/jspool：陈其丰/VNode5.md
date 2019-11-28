@@ -6,11 +6,11 @@
 
 需求如下：
 
-![](./12.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node12.png)
 
 `React`中的`Diff`会这样操作：
 
-![](./17.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node17.png)
 
 共移动了两次
 
@@ -19,13 +19,13 @@
 
 然而，在这个例子中，我们可以通过肉眼观察从而得知最优的解决方案应该是：把 li-c 节点对应的真实 DOM 移动到最前面即可，只需要一次移动即可完成更新。
 
-![](./18.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node18.png)
 
 ## 双端比较
 
 所谓`双端比较`，就是同时从新旧子节点的两端开始比较的一种方式，所以我们需要四个索引值，分别指向新旧子节点的两端：
 
-![](./19.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node19.png)
 
 ```js
 // 获取四个索引
@@ -53,7 +53,7 @@ while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx){
 
 双端比较，分为四个步骤：
 
-![](./20.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node20.png)
 
 1. 旧前 VS 新前
 2. 旧后 VS 新后
@@ -81,7 +81,7 @@ else if (oldEndVNode.key === newStartVNode.key) {
 
 以之前的例子作为基础，看看双端比较是如何操作的：
 
-![](./20.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node20.png)
 
 1. 旧前 VS 新前 --> key不同 --> 什么也不做
 2. 旧后 VS 新后 --> key不同 --> 什么也不做
@@ -121,7 +121,7 @@ else if (oldEndVNode.key === newStartVNode.key) {
 
 更新并移动后,新的索引关系：
 
-![](./21.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node21.png)
 
 接着第二轮对比：
 
@@ -155,7 +155,7 @@ else if (oldEndVNode.key === newStartVNode.key) {
 
 更新后，新的索引关系：
 
-![](./22.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node22.png)
 
 继续比较:
 
@@ -191,7 +191,7 @@ else if (oldEndVNode.key === newStartVNode.key) {
 
 更新并移动后，新的索引关系：
 
-![](./23.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node23.png)
 
 继续比较:
 
@@ -224,7 +224,7 @@ else if (oldEndVNode.key === newStartVNode.key) {
 
 在这一轮更新完成之后，虽然没有进行任何移动操作，但是我们发现，真实DOM的顺序，已经与新子节点的顺序保持一致了，也就是说我们圆满的完成了目标，如下图所示：
 
-![](./24.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node24.png)
 
 ## 非理想情况
 
@@ -237,7 +237,7 @@ else if (oldEndVNode.key === newStartVNode.key) {
 
 之前的例子，是比较理想化的例子，在每轮比较中，总会满足四个步骤中的一步，但实际情况下并不会这么理想：
 
-![](./25.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node25.png)
 
 上图中 ①、②、③、④ 这四步中的每一步比对，都无法找到可复用的节点，此时我们只能通过循环的方式，来试图寻找新前节点在旧节点中的索引值`idxInOld`
 
@@ -277,7 +277,7 @@ while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx){
 
 如果`idxInOld`被找到，则意味着这个索引对应的旧节点的真实DOM，在新节点中的顺序，已经变成了第一个节点：
 
-![](./26.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node26.png)
 
 代码如下：
 
@@ -306,7 +306,7 @@ else{
 
 需要注意的是，由于我们找到的旧节点的DOM已经被移动，所以我们将该节点设置为`undefined`,并且将`newStartIdx`下移一位：
 
-![](./27.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node27.png)
 
 由于旧节点中出现了undefined，所以在接下来的比较的过程中，`oldStartVNode`或`oldEndVNode`两者之一可能是`undefined`，此时说明该节点已经被处理了，可以跳过这一位置：
 
@@ -347,7 +347,7 @@ while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx){
 
 上接前文，当双端比较没有找到复用节点时，会遍历旧节点寻找与新前节点key相同的旧节点索引`idxInOld`,当`idxInOld`没有被找到时，则可以认为这个新前节点就是新增的节点：
 
-![](./28.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node28.png)
 
 代码如下：
 
@@ -396,19 +396,19 @@ while(oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx){
 
 再看另一种情况：
 
-![](./29.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node29.png)
 
 ---
 
-![](./30.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node30.png)
 
 ---
 
-![](./31.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node31.png)
 
 ---
 
-![](./32.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node32.png)
 
 我们发现，经过双端比较后，旧节点的索引已经循环完成，此时循环的条件已经不再满足，但新节点中，依然有遗漏的节点，遗漏的节点即为新增的节点：
 
@@ -428,15 +428,15 @@ if (oldEndIdx < oldStartIdx) {
 
 对于双端比较，最后一个需要考虑的情况是：当有元素被移除时的情况，如下图所示：
 
-![](./33.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node33.png)
 
 ---
 
-![](./34.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node34.png)
 
 ---
 
-![](./35.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node35.png)
 
 我们发现，经过双端比较后，新节点的索引已经循环完成，此时循环的条件已经不再满足，但旧节点中，依然有未处理的节点，这些节点即为需要删除的节点：
 

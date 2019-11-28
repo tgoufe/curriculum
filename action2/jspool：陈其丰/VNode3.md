@@ -36,15 +36,15 @@ for (let i = 0; i < nextChildren.length; i++) {
 在浏览器中操作DOM是极为昂贵的，这种操作方式需要不停的对DOM进行删除和创建的操作，但是对于新旧节点差异很小的情况下，无法尽可能的复用原有DOM节点，从而造成性能上的浪费。
 
 看一个简单的例子：
-![](./3.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node3.png)
 
 按照之前的逻辑，原有子节点删除，重新创建所有的新子节点，无疑会造成性能上的巨大浪费。
 
-![](./4.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node4.png)
 
 我们真正想做的，其实是找出二者之间的区别，针对二者的不同进行修改。
 
-![](./5.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node5.png)
 
 
 找出新旧子节点的不同，并针对不同之处进行更新的过程，其实就是我们常说的核心Diff算法。
@@ -63,7 +63,7 @@ React对于Key的说明：
 
 >新子节点根据自己的key找到对应的旧子节点。
 
-![](./6.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node6.png)
 
 通过key来查找新旧子节点的对应关系其实很好理解，但不论是React还是Vue，都支持不传递Key的使用方式，那么这种方式，新旧子节点如何查找对应关系的呢？
 
@@ -73,15 +73,15 @@ React对于Key的说明：
 
 当新旧子节点长度相同时：
 
-![](./7.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node7.png)
 
 当新子节点长度大于旧子节点长度：
 
-![](./8.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node8.png)
 
 当新子节点长度小于旧子节点长度：
 
-![](./9.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node9.png)
 
 
 简单代码：

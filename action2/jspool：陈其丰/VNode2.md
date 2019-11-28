@@ -111,7 +111,7 @@ let VNode = {
 
 h函数作为创建VNode对象的函数封装，React中通过babel将JSX转换为h函数的形式，Vue中通过vue-loader将模板转换为h函数。
 
-![](./1.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node1.png)
 
 ```javascript
 function h(tag = null,data = null,children = null){
@@ -224,7 +224,7 @@ render(VNode, container)
 
 结果如下：
 
-![](./2.png)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node2.png)
 
 ## 什么是虚拟DOM的更新
 
