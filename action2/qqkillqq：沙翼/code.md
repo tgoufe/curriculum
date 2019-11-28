@@ -240,16 +240,21 @@ const inorderTraversal=root=>(root===null)?[...inorderTraversal(root.left),root.
 
 两种类似的思路，不同的写法，返回不同的排列方式，你可以选择你喜欢的
 
+30s提供的方法，子集中包含一个空数组，但这通常不是我们需要的，而且子集的排序是颠倒的。
+
 ```javascript
 const powerset = (arr=[]) =>arr.reduce((rs, item) => rs.concat(rs.map(r => [item].concat(r))), [[]])
-const powerset2=(arr=[])=>arr.reduce((rs,item)=>[...rs,...rs.slice().map(i=>i.concat(item)),[item]],[])
 //powerset([1,2,3]) =>[ [], [ 1 ], [ 2 ], [ 2, 1 ], [ 3 ], [ 3, 1 ], [ 3, 2 ], [ 3, 2, 1 ] ]
-//powerset2([1,2,3]) =>[ [ 1 ], [ 1, 2 ], [ 2 ], [ 1, 3 ], [ 1, 2, 3 ], [ 2, 3 ], [ 3 ] ]
+```
+我常用的方法，不包含空数组，返回的组合排序看起来更正常一点，强迫症福利。
+```javascript
+const powerset=(arr=[])=>arr.reduce((rs,item)=>[...rs,...rs.slice().map(i=>i.concat(item)),[item]],[])
+//powerset([1,2,3]) =>[ [ 1 ], [ 1, 2 ], [ 2 ], [ 1, 3 ], [ 1, 2, 3 ], [ 2, 3 ], [ 3 ] ]
 ```
 
 ## 多个数组的交叉组合
 
-通常你在网上看到的是两个数组的交叉组合，但是实际项目中更多的是多个数组的交叉组合，如果你在做SKU或者商品组合的需求的时候可能会急需下面这个方法
+通常你在网上看到的都是两个数组的交叉组合，但是实际项目中更多的是多个数组的交叉组合，如果你在做SKU或者商品组合的需求的时候可能会急需下面这个方法
 
 ```javascript
 const xprod=(...lists)=>lists.reduce((rs,arrItem)=>rs.length
@@ -273,44 +278,34 @@ const xprod=(...lists)=>lists.reduce((rs,arrItem)=>rs.length
 ## 全排列
 
 ```javascript
-const permutations = arr => {
-  if (arr.length <= 2) return arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr;
-  return arr.reduce(
-    (acc, item, i) =>
-      acc.concat(
-        permutations([...arr.slice(0, i), ...arr.slice(i + 1)]).map(val => [item, ...val])
-      ),
-    []
-  );
-};
+const permutations = arr =>  arr.length <= 2
+    ? (arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr)
+    : arr.reduce( (acc, item, i) => acc.concat( permutations([...arr.slice(0, i), ...arr.slice(i + 1)]).map(val => [item, ...val]) ), [] )
 //permutations([1,2,3]) => [ [ 2, 3, 1 ],[ 3, 2, 1 ],[ 1, 3, 2 ],[ 3, 1, 2 ],[ 1, 2, 3 ],[ 2, 1, 3 ] ]
 ```
 
 另一种常见的全排列是给定一个字符串，然后进行全拍列，对上面的函数稍加改造就可以了
 
 ```javascript
-const stringPermutations = str => {
-  if (str.length <= 2) return str.length === 2 ? [str, str[1] + str[0]] : [str];
-  return str.split('').reduce((acc, letter, i) =>
-    acc.concat(stringPermutations(str.slice(0, i) + str.slice(i + 1)).map(val => letter + val)), []);
-};
+const stringPermutations = str => str.length <= 2
+    ? (str.length === 2 ? [str, str[1] + str[0]] : [str])
+    : str.split('').reduce((acc, letter, i) =>
+      acc.concat(stringPermutations(str.slice(0, i) + str.slice(i + 1)).map(val => letter + val)), [])
 //stringPermutations('abc') => [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
 ```
 
-## 分组计算
+## 分组统计
 
 ```javascript
-const groupBy = (arr, fn) =>
-  arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val, i) => {
-    acc[val] = (acc[val] || []).concat(arr[i]);
-    return acc;
-  }, {});
-const countBy = (arr, fn) =>
-  arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val) => {
-    acc[val] = (acc[val] || 0) + 1;
-    return acc;
-  }, {});
+const groupBy = (arr, fn) => arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val, i) => (acc[val] = (acc[val] || []).concat(arr[i]), acc), {})
 ```
+常见的需求：后台给你一个城市列表，要按照所在省份分组显示，或者给你一个list要按照某种规则做成树形菜单。
+
+```javascript
+const countBy = (arr, fn) => arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val) => (acc[val] = (acc[val] || 0) + 1 , acc), {})
+```
+
+常见的需求：
 
 ## “真正”的数组乱序
 
@@ -328,6 +323,64 @@ const shuffle=(arr)=>{
 ```
 
 注：严格意义上讲，没有绝对的随机，我们只要保证所有组合出现的频率差别不大就可以了。如果你需要了解随机算法更详细的知识可以看我之前的讲解--[洗牌算法和随机排序](https://mp.weixin.qq.com/s/KCVwLMZYurlkeT1PJzY4Kw)
+
+## 差异过滤
+
+以后续数组做过滤，返回第一个数组独有的内容
+
+```javascript
+const difference = (...args) => args.reduce((pre,next)=>pre.filter(x=>!new Set(next).has(x)))
+
+const differenceBy = (...args) => {
+  let lastArg=args[args.length - 1]
+  let fn=typeof lastArg === 'function' ? lastArg : i=>i
+  return args.reduce((pre,next)=>typeof next ==='function'
+    ? pre
+    : pre.filter(x=>!new Set(next.map(fn)).has(fn(x))))
+};
+
+const differenceWith = (...args) => {
+  let lastArg=args[args.length - 1]
+  let fn=typeof lastArg === 'function' ? lastArg : (a,b)=>b
+  return args.reduce((pre,next)=>typeof next ==='function'
+    ? pre
+    : pre.filter(a => !~next.findIndex(b => fn(a, b))))
+}
+```
+
+如果你的后台有多个service，而且后台人员不给你做数据整合的时候，你可能非常需要这个过滤方法，举个例子：
+
+item给你一堆商品，coupon给你一堆不能用券的商品，activity给你一堆不能参加活动的商品，现在让你在前台展示剩余的商品。
+
+ps：经常有人搞不清by和with的区别，by是先使用函数进行处理然后比较，回调接收的是一个参数，with是直接用两个值进行比较，回调接收的是两个参数
+
+<span style="color:red">特别提醒</span>：[30s](https://github.com/30-seconds/30-seconds-of-code)（包括有很多抄来的文章）提供的differenceBy会有下面几个问题，使用的时候一定要注意
+
+1. 一次只能处理两个数组
+2. by方法会返回被回调函数修改过的结果，这一定不是你想要的，我也不清楚作者为何这么写，因为在对称过滤symmetricDifferenceBy的源码中不存在这个问题
+3. 不传回调函数的时候会报错
+
+以上这些问题在lodash和本文给你提供的片段中都不存在
+
+## 交集过滤
+
+有差异过滤就一定有交集过滤，需求和实现都差不多，就不多描述了，同样帮你处理好了多数组和默认函数的情况。
+
+```javascript
+const intersection = (a, b) => {
+  const s = new Set(b);
+  return a.filter(x => s.has(x));
+};
+
+const intersectionBy = (a, b, fn) => {
+  const s = new Set(b.map(fn));
+  return a.filter(x => s.has(fn(x)));
+};
+
+const intersectionWith = (a, b, comp) => a.filter(x => b.findIndex(y => comp(x, y)) !== -1);
+```
+
+
 
 ## 限定范围随机数
 
@@ -347,7 +400,7 @@ const rangeInt=(min,max)=>Math.floor(range(min,max))
 const randomHex=()=>'#'+Math.random().toString(16).slice(2,8)
 ```
 
-注：大约有100亿分之一的概率会出错，建议监控一下这方法，出错的时候买张彩票。
+注：大约有100亿分之一的概率会出错，和你连续被雷劈两个月的概率差不多，建议监控一下这方法，出错的时候买张彩票。
 
 ## 颜色互转
 
@@ -388,15 +441,28 @@ const compose = (...functions) => (initialValue) =>
 
 ## 柯里化
 
+正反两个方向的柯里化
+
 ```javascript
-const curry = (fn, arity = fn.length, ...args) =>
-  arity <= args.length
-    ? fn(...args)
-    : curry.bind(null, fn, arity, ...args);
-const uncurry = (fn, n = 1) => (...args) => {
-  const next = acc => args => args.reduce((x, y) => x(y), acc);
-  if (n > args.length) throw new RangeError('Arguments too few!');
-  return next(fn)(args.slice(0, n));
+const curry = (fn, arity = fn.length, ...args) => arity <= args.length ? fn(...args) : curry.bind(null, fn, arity, ...args)
+```
+
+```javascript
+const uncurry = (fn, n = 1) => (...args) => (acc => args => args.reduce((x, y) => x(y), acc))(fn)(args.slice(0, n))
+```
+
+## 缓存函数
+
+个人认为这个相当有用，除了能解决性能上的问题外还可以解决eslint不允许函数重载的问题。
+
+```javascript
+const memoize = fn => {
+  const cache = new Map();
+  const cached = function(val) {
+    return cache.has(val) ? cache.get(val) : cache.set(val, fn.call(this, val)) && cache.get(val);
+  };
+  cached.cache = cache;
+  return cached;
 };
 ```
 
@@ -416,29 +482,44 @@ const rootSum = (n)=>(n-1)%9+1
 const fill0=(value,len=1)=>(Array(len).join(0)+value).slice(-Math.max(len,value.toString().length))
 ```
 
-为什么不用padStart?因为只是给你提供个思路，用也行。
+为什么不用padStart?第一是给你提供个思路，第二是有些老旧项目没法加babel
+
+下面是padstart版本
 
 ```javascript
 const fill0=(value,len)=>`${value}`.padStart(len,0)
 ```
 
+## 银行卡校验
+
+也叫模10算法，如果你的项目里需要校验银行卡的时候非常有用
+
+```javascript
+const luhnCheck = num => {
+  let arr = (num + '')
+    .split('')
+    .reverse()
+    .map(x => parseInt(x));
+  let lastDigit = arr.splice(0, 1)[0];
+  let sum = arr.reduce((acc, val, i) => (i % 2 !== 0 ? acc + val : acc + ((val * 2) % 9) || 9), 0);
+  sum += lastDigit;
+  return sum % 10 === 0;
+};
+```
+
+
+
 ## url参数互转
 
 ```javascript
-const objectToQueryString = queryParameters => {
-  return queryParameters
+const objectToQueryString = queryParameters => queryParameters
     ? Object.entries(queryParameters).reduce((queryString, [key, val], index) => {
         const symbol = index === 0 ? '?' : '&';
         queryString += typeof val === 'string' ? `${symbol}${key}=${val}` : '';
         return queryString;
       }, '')
-    : '';
-};
-const getURLParameters = url =>
-  (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
-    (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a),
-    {}
-  );
+    : ''
+const getURLParameters = url => (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce( (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a), {} );
 ```
 
 注：获取URL参数的时候如果存在单页哈希会出现问题。
@@ -448,22 +529,20 @@ const getURLParameters = url =>
 ```javascript
 const toKebabCase = str =>
   str &&
-  str
-    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+  str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
     .map(x => x.toLowerCase())
     .join('-');
 const toCamelCase = str => {
   let s =
     str &&
-    str
-      .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+    str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
       .map(x => x.slice(0, 1).toUpperCase() + x.slice(1).toLowerCase())
       .join('');
   return s.slice(0, 1).toLowerCase() + s.slice(1);
 };
 ```
 
-
+这两个方法在动态生成样式表的时候非常有用
 
 ## HTML正反编码
 
@@ -516,3 +595,5 @@ const getFolders=(filePath, deep = true)=>fs.readdirSync(filePath).reduce((rs, i
 ```
 
 功能：返回一个数组，包含文件或文件夹的路径和名称，这两个属性是最常用的，如果需要其他的可以自行添加
+
+https://juejin.im/post/5da1a04ae51d45783d6122bf#heading-77
