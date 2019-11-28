@@ -2,32 +2,11 @@
 
 我相信你一定遇到过在开发一些功能的时候可能被卡在某个功能函数上，当你遇到这些问题的时候你可能会花上很多时间去百度Google，或者直接引入一个第三方库，可是搜索的结果不知道靠不靠谱，会不会有坑（没考虑全面的地方），如果直接引入库，你又在纠结是不是会导致文件过大。
 
-网络上有很多代码片段的文章，但是很多内容包含了过于简单的代码，或者在实际需求中用不上的代码，下面列举了一些我常用的代码片段，它们也许并不完美，但是短小精炼，并且能解决你80%以上的需求，对于不能处理的问题和可能用到的场景我会做说明。
+网络上有很多代码片段的文章，比如非常著名的[30秒](https://github.com/30-seconds/30-seconds-of-code)，但是很多内容包含了过于简单的代码，或者在实际需求中用不上的代码，亦或是有些代码没有说明存在的问题。
+
+下面列举了一些我常用的代码片段，它们并不完美，但是短小精炼，并且能解决你80%以上的需求，对于不能处理的问题和可能用到的场景我会做说明。
 
 PS：由于是自用片段，为了简短，大量使用了拓展运算，三目运算，箭头函数并省略了所有能省略的return，这可能导致有些代码看起来不易理解，你可以自行转换成if语句或者带有return的函数来帮助你理解，
-
-## 在NODE下获取所有文件或文件夹
-
-```JavaScript
-const path = require('path')
-const fs = require('fs')
-const getFiles=(filePath, deep = true)=>fs.readdirSync(filePath).reduce((rs, i) => {
-  let tpath = path.join(filePath, i)
-  return rs.concat(
-    fs.statSync(tpath).isDirectory()
-      ? (deep ? getFiles(tpath) : [])
-      : { path: tpath, name: i, folderName: path.basename(filePath) }
-  )
-}, [])
-const getFolders=(filePath, deep = true)=>fs.readdirSync(filePath).reduce((rs, i) => {
-  let tpath = path.join(filePath, i)
-  return fs.statSync(tpath).isDirectory()
-  ? rs.concat({ path: tpath, name: i }, deep ? getFolders(tpath, deep) : [])
-  : rs
-}, [])
-```
-
-功能：返回一个数组，包含文件或文件夹的路径和名称，这两个属性是最常用的，如果需要其他的可以自行添加
 
 ## 节流防抖
 
@@ -153,10 +132,7 @@ const clone=(target, map = new WeakMap())=>{
 只能执行一次的函数，之后再调用这个函数，将返回一次最后调用fn的结果
 
 ```javascript
-const once =(fn,rs,n=2)=>(...args)=>{
-  --n>0? rs=fn.apply(this,args): fn = undefined
-  return rs
-}
+const once =(fn,rs,n=2)=>(...args)=>(--n>0? rs=fn.apply(this,args): fn = undefined,rs)
 ```
 
 ## N次执行函数
@@ -164,19 +140,18 @@ const once =(fn,rs,n=2)=>(...args)=>{
 调用次数不超过 `n` 次。 之后再调用这个函数，将返回一次最后调用fn的结果
 
 ```javascript
-const before = (n,fn,rs)=>(...args)=>{
-  --n>0? rs=fn.apply(this,args): fn = undefined
-  return rs;
-}
+const before = (n,fn,rs)=>(...args)=>(--n>0? rs=fn.apply(this,args): fn = undefined,rs)
 ```
 
-特别备注：上面的写法其实是不安全的，完全是为了少套一层函数而把变量写进参数，这在你意外多传参数的时候可能会对外部变量产生影响，除非你在使用时非常明确的知道其影响，否则请使用下面的形式。
+特别备注：上面的写法其实是不安全的，完全是为了简单而把变量写进参数，这在你意外多传参数的时候可能会对外部变量产生影响，除非你在使用时非常明确的知道其影响，否则请使用下面的形式。
 
 ```javascript
 const before=(n, fn)=>{
   let rs;
   return function() {
-    --n>0? rs=fn.apply(this, arguments): fn = undefined
+    --n>0
+      ? rs=fn.apply(this, arguments)
+			: fn = undefined
     return rs;
   };
 }
@@ -189,19 +164,46 @@ const once=(fn)=>before(2,fn)
 
 ```javascript
 const times = (num,fn=i=>i) =>Array.from({ length: num }).reduce((rs, _, index) =>rs.concat(fn(index)), []);
+//times(5) => [0,1,2,3,4]
+//times(5,i=>`user${i}`) => [ 'user0', 'user1', 'user2', 'user3', 'user4' ]
 ```
 
 ## get
 
-你肯定遇到过访问对象属性的时候报错的情况，这个简易版的get方法虽然不如lodash的强大，但是临时使用的时候非常nice
+你肯定遇到过访问对象属性的时候报错的情况，使用下面的get函数可以帮助你更安全的访问对象属性。
 
 ```javascript
 const get= (obj,path,rs) => path.replace(/\[([^\[\]]*)\]/g, '.$1.').split('.').filter(t => t !== '').reduce((a,b) => a&&a[b],obj);
+//get({a:[1,2,{b:3}]},'a[2].b.user.age') ==>undefined
 ```
+
+如果你想了解更多安全访问数组的方法的话可以查看这里---[灵犀一指](https://mp.weixin.qq.com/s/CNeugygWhAs6tp0soI-WNQ)
 
 ## 拓展数组方法到对象
 
+数组的every，some，filter，forEach，map是开发中的利器，但遗憾的是只能对数组使用，lodash等工具函数提供了同名的方法可以同时作用于数组和对象，你可以使用下面的拓展函数把这些方法拓展到其他对象上，默认拓展到Object的原型上，可以像数组一样直接使用，如果拓展到其他对象上，可以像lodash一样将目标对象作为第一个参数，回调函数作为第二个参数使用。
 
+```javascript
+const extendATO=(nameSpace=Object.prototype)=>{
+  ['every','some','filter','forEach','map'].forEach(methodName=>{
+    nameSpace[methodName]=function(...args){
+      let fn=args[nameSpace===Object.prototype?0:1]
+      let obj=nameSpace===Object.prototype?this:args[0]
+      let values=Object.values(obj)
+      let keys=Object.keys(obj)
+      return keys[methodName](function(value,index,obj){
+        return fn(values[index],keys[index],obj)
+      })
+    }
+  })
+}
+//extendATO()
+//({a:1,b:2,c:0}).every(value=>value) => false
+//({a:1,b:2,c:0}).map((value,key)=>key+1) => ['a1','b1','c1']
+//let _={}
+//extendATO(_)
+//_.map({a:1,b:2},value=>value+1) =>[2,3]
+```
 
 ## 数组的扁平化
 
@@ -217,14 +219,15 @@ const flatten = (list) => list.reduce((acc, value) => acc.concat(value), []);
 const flatten = (list) =>JSON.parse(`[${JSON.stringify(list).replace(/\[|\]/g, '')}]`);
 ```
 
-注：此方法无法处理null，undefined和循环引用等问题
+注：此方法无法处理null，undefined和循环引用等问题，更多数组扁平化的操作可以看这里--[大力金刚掌](https://mp.weixin.qq.com/s/_GQadYarAC4MmmtRyl11xw)
 
 ## 类型判断
 
 ```javascript
 const is=(type,obj)=>new RegExp(type,'i').test(Object.prototype.toString.call(obj).slice(8,-1))
-is('string','sdfsdfds')//true
-is('array',[])//true
+//is('string','sdfsdfds') => true
+//is('array',[]) =>true
+//is('array|number',5) =>true 
 ```
 
 ## 中序遍历二叉树
@@ -246,23 +249,30 @@ const powerset2=(arr=[])=>arr.reduce((rs,item)=>[...rs,...rs.slice().map(i=>i.co
 
 ## 多个数组的交叉组合
 
-如果你在做SKU或者商品组合的需求的时候可能会急需下面这几个方法
+通常你在网上看到的是两个数组的交叉组合，但是实际项目中更多的是多个数组的交叉组合，如果你在做SKU或者商品组合的需求的时候可能会急需下面这个方法
 
 ```javascript
 const xprod=(...lists)=>lists.reduce((rs,arrItem)=>rs.length
   ? rs.reduce((acc,item)=>arrItem.reduce((acc,value)=>acc.concat([[...item,value]]),acc),[])
   : arrItem,[''])
 //xprod(['red','blue'],['36','37','38'],['男','女'])
+[ [ 'red', '36', '男' ],
+  [ 'red', '36', '女' ],
+  [ 'red', '37', '男' ],
+  [ 'red', '37', '女' ],
+  [ 'red', '38', '男' ],
+  [ 'red', '38', '女' ],
+  [ 'blue', '36', '男' ],
+  [ 'blue', '36', '女' ],
+  [ 'blue', '37', '男' ],
+  [ 'blue', '37', '女' ],
+  [ 'blue', '38', '男' ],
+  [ 'blue', '38', '女' ] ]
 ```
 
-## 数组全排列
+## 全排列
 
 ```javascript
-const stringPermutations = str => {
-  if (str.length <= 2) return str.length === 2 ? [str, str[1] + str[0]] : [str];
-  return str.split('').reduce((acc, letter, i) =>
-    acc.concat(anagrams(str.slice(0, i) + str.slice(i + 1)).map(val => letter + val)), []);
-};
 const permutations = arr => {
   if (arr.length <= 2) return arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr;
   return arr.reduce(
@@ -274,6 +284,17 @@ const permutations = arr => {
   );
 };
 //permutations([1,2,3]) => [ [ 2, 3, 1 ],[ 3, 2, 1 ],[ 1, 3, 2 ],[ 3, 1, 2 ],[ 1, 2, 3 ],[ 2, 1, 3 ] ]
+```
+
+另一种常见的全排列是给定一个字符串，然后进行全拍列，对上面的函数稍加改造就可以了
+
+```javascript
+const stringPermutations = str => {
+  if (str.length <= 2) return str.length === 2 ? [str, str[1] + str[0]] : [str];
+  return str.split('').reduce((acc, letter, i) =>
+    acc.concat(stringPermutations(str.slice(0, i) + str.slice(i + 1)).map(val => letter + val)), []);
+};
+//stringPermutations('abc') => [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
 ```
 
 ## 分组计算
@@ -291,8 +312,6 @@ const countBy = (arr, fn) =>
   }, {});
 ```
 
-
-
 ## “真正”的数组乱序
 
 是不是每次数组乱序你用的都是Math.random()-.5，其实这个并不是真正的随机，如果你要用这样的算法做个年会抽奖程序，可能会在一帮屌丝现场review代码的时候被打死，试试Fisher–Yates随机。
@@ -308,7 +327,7 @@ const shuffle=(arr)=>{
 }
 ```
 
-注：严格意义上讲，没有绝对的随机，我们只要保证所有组合出现的频率差别不大就可以了。
+注：严格意义上讲，没有绝对的随机，我们只要保证所有组合出现的频率差别不大就可以了。如果你需要了解随机算法更详细的知识可以看我之前的讲解--[洗牌算法和随机排序](https://mp.weixin.qq.com/s/KCVwLMZYurlkeT1PJzY4Kw)
 
 ## 限定范围随机数
 
@@ -475,3 +494,25 @@ const unescapeHTML = str =>
   );
 ```
 
+## 在NODE下获取所有文件或文件夹
+
+```JavaScript
+const path = require('path')
+const fs = require('fs')
+const getFiles=(filePath, deep = true)=>fs.readdirSync(filePath).reduce((rs, i) => {
+  let tpath = path.join(filePath, i)
+  return rs.concat(
+    fs.statSync(tpath).isDirectory()
+      ? (deep ? getFiles(tpath) : [])
+      : { path: tpath, name: i, folderName: path.basename(filePath) }
+  )
+}, [])
+const getFolders=(filePath, deep = true)=>fs.readdirSync(filePath).reduce((rs, i) => {
+  let tpath = path.join(filePath, i)
+  return fs.statSync(tpath).isDirectory()
+  ? rs.concat({ path: tpath, name: i }, deep ? getFolders(tpath, deep) : [])
+  : rs
+}, [])
+```
+
+功能：返回一个数组，包含文件或文件夹的路径和名称，这两个属性是最常用的，如果需要其他的可以自行添加
