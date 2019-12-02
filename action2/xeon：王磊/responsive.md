@@ -39,9 +39,9 @@ css媒体查询有三种方法。
 
 ```html
 <link rel="stylesheet" type="text/css" href="css/css.css" />
-<link rel="stylesheet" type="text/css" href="css/css_980.css" media="screen and (min-width:980px) and (max-width:1200px)"/>
-<link rel="stylesheet" type="text/css" href="css/css_640.css" media="screen and (min-width:640px) and (max-width:980px)"/>
-<link rel="stylesheet" type="text/css" href="css/css_375.css" media="screen and (max-width:640px)"/>
+	<link rel="stylesheet" type="text/css" href="css/css_980.css" media="screen and (min-width:680px) and (max-width:980px)"/>
+	<link rel="stylesheet" type="text/css" href="css/css_680.css" media="screen and (min-width:500px) and (max-width:679px)"/>
+	<link rel="stylesheet" type="text/css" href="css/css_500.css" media="screen and (max-width:499px)"/>
 ```
 
 二、使用@import导入
@@ -53,7 +53,7 @@ css媒体查询有三种方法。
 三、最常用的在css文件中使用
 
 ```css
-@media screen and (max-width:980px ) {
+@media screen and (min-width:680px ) and (max-width:980px ) {
    body{
      css样式
    }
