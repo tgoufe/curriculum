@@ -13,15 +13,17 @@ categories: html css3
 
 ## 什么是响应式布局设计
 
-在实现不同屏幕分辨率的终端上浏览网页的不同展示方式。通过响应式设计能使网站在手机和平板电脑上有更好的浏览阅读体验。
+根据维基百科及其参考文献，理论上，响应式界面能够适应不同的设备。描述响应式界面最著名的一句话就是“Content is like water”，翻译成中文便是“如果将屏幕看作容器，那么内容就像水一样”。
 
-要实现响应布局
+## 为什么要设计响应式界面
 
-屏幕分类
+为了让页面在不同分辨率的屏幕上，都有做到很好的显示效果。
 
 目前主流屏幕尺寸分为三种
 
 超小屏(移动端)、中小屏(PAD)、宽屏(PC端)
+
+页面要在不同的大小和比例上看起来都应该是舒适，在不同分辨率上看都应该是合适的，在不同的操作方式上（鼠标和触屏），体验应该是统一的。在不同的设备，交互方式应该是符合习惯的。
 
 ## 响应式的设计过程
 
@@ -63,6 +65,35 @@ css媒体查询有三种方法。
 3、Javascript响应式
 
 方法很简单，是读取窗口宽度加载不同的css。
+
+## 响应式界面的基本规则
+
+1、**可伸缩的内容区块**：内容区块的在一定程度上能够自动调整，以确保填满整个页面
+
+![图2](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/responsive_2.jpg)
+
+**2、可自由排布的内容区块**：当页面尺寸变动较大时，能够减少/增加排布的列数
+
+![图3](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/responsive_3.jpg)
+
+**3、适应页面尺寸的边距**：到页面尺寸发生更大变化时，区块的边距也应该变化
+
+![图4](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/responsive_4.jpg)
+
+**4、能够适应比例变化的图片**：对于常见的宽度调整，图片在隐去两侧部分时，依旧保持美观可用
+
+![图5](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/responsive_5.jpg)
+
+**5、能够自动隐藏/部分显示的内容**：如在电脑上显示的的大段描述文本，在手机上就只能少量显示或全部隐藏
+
+![图6](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/responsive_6.jpg)
+
+**6、能自动折叠的导航和菜单**：展开还是收起，应该根据页面尺寸来判断
+
+![图7](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/responsive_7.jpg)
+
+**7、放弃使用像素作为尺寸单位**
+
 
 ## 响应式与自适应的区别与特点
 
