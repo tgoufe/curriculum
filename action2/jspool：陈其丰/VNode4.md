@@ -86,8 +86,7 @@ export function h(tag, data = null, children = null) {
 
 有了 key 我们就能够明确的知道新旧 children 中节点的映射关系，如下图所示：
 
-
-![](https://user-gold-cdn.xitu.io/2019/11/13/16e63e26d4a45728?w=796&h=386&f=png&s=40087)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node10.png)
 
 知道了映射关系，我们就可以判断新子节点是否可被复用。
 
@@ -115,8 +114,7 @@ for (let i = 0; i < nextChildren.length; i++) {
 
 先看一个不需要移动的例子：
 
-
-![](https://user-gold-cdn.xitu.io/2019/11/13/16e63e2984d23bef?w=784&h=390&f=png&s=37343)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node11.png)
 
 + 取出`新children`的第一个节点，即`li-a`，并尝试在`旧children`中寻找 `li-a`，结果是我们找到了，并且`li-a`在`旧children`中的索引为`0`。
 + 取出`新children`的第二个节点，即`li-b`，并尝试在`旧children`中寻找 `li-b`，也找到了，并且`li-b`在`旧children`中的索引为`1`。
@@ -126,8 +124,7 @@ for (let i = 0; i < nextChildren.length; i++) {
 
 再看一个需要移动的例子：
 
-
-![](https://user-gold-cdn.xitu.io/2019/11/13/16e63e2b2b182881?w=802&h=382&f=png&s=36221)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node12.png)
 
 + 取出`新children`的第一个节点，即`li-c`，并尝试在`旧children`中寻找 `li-c`，结果是我们找到了，并且`li-c`在`旧children`中的索引为`2`。
 + 取出`新children`的第二个节点，即`li-a`，并尝试在`旧children`中寻找 `li-a`，也找到了，并且`li-a`在`旧children`中的索引为`0`。
@@ -168,13 +165,11 @@ for (let i = 0; i < nextChildren.length; i++) {
 
 现在我们已经有办法找到需要移动的节点了，接下来要解决的问题就是：应该如何移动这些节点？
 
-
-![](https://user-gold-cdn.xitu.io/2019/11/13/16e63e2d3460feb1?w=802&h=382&f=png&s=36221)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node12.png)
 
 `新children`中的第一个节点是`li-c`，它在`旧children`中的索引为`2`，由于`li-c`是`新children`中的第一个节点，所以它始终都是不需要移动的，只需要调用`patch函数`更新即可，如下图：
 
-
-![](https://user-gold-cdn.xitu.io/2019/11/13/16e63e2f7db9b9eb?w=820&h=576&f=png&s=62051)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node13.png)
 
 `li-c`节点更新完毕，接下来是`新children`中的第二个节点`li-a`，它在`旧children`中的索引是`0`，由于 0 < 2 所以`li-a`是需要移动的节点，那应该怎么移动呢？很简单，`新children`中的节点顺序实际上就是更新完成之后，节点应有的最终顺序，通过观察`新children`可知，`新children`中`li-a`节点的前一个节点是`li-c`，所以我们的移动方案应该是：把`li-a`节点对应的`真实 DOM`移动到`li-c`节点所对应`真实DOM`的后面。
 
@@ -206,16 +201,14 @@ for (let i = 0; i < nextChildren.length; i++) {
 }
 ```
 
-
-![](https://user-gold-cdn.xitu.io/2019/11/13/16e63e3142607db2?w=1032&h=698&f=png&s=76556)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node14.png)
 
 
 ## 添加新元素
 
 在上面的讲解中，我们一直忽略了一个问题，即`新children`中可能包含那些不能够通过移动来完成更新的节点，例如`新children`中包含了一个全新的节点，这意味着在`旧children`中是找不到该节点的，如下图所示：
 
-
-![](https://user-gold-cdn.xitu.io/2019/11/13/16e63e32e6585098?w=994&h=374&f=png&s=43836)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node15.png)
 
 节点`li-d`在`旧的children`中是不存在的，所以当我们尝试在`旧的children`中寻找`li-d`节点时，是找不到可复用节点的，这时就没办法通过移动节点来完成更新操作，所以我们应该使用`mount`函数将`li-d`节点作为全新的`VNode`挂载到合适的位置。
 
@@ -256,8 +249,7 @@ for (let i = 0; i < nextChildren.length; i++) {
 
 除了要将全新的节点添加到容器元素之外，我们还应该把已经不存在了的节点移除，如下图所示：
 
-
-![](https://user-gold-cdn.xitu.io/2019/11/13/16e63e348905a4ad?w=780&h=368&f=png&s=34630)
+![](https://zhang-yue.oss-cn-beijing.aliyuncs.com/bingshan/v_node16.png)
 
 可以看出，`新的children`中已经不存在`li-c`节点了，所以我们应该想办法将`li-c`节点对应的`真实DOM`从容器元素内移除。
 
@@ -282,11 +274,3 @@ for (let i = 0; i < prevChildren.length; i++) {
 
 至此，第一个完整的`Diff`算法我们就讲解完毕了，这个算法就是`React`所采用的`Diff`算法。但该算法仍然存在可优化的空间，在下一次分享中继续讨论。
 
-
-<div style="display:none;">
-var style = document.createElement("style");
-style.type = "text/css";
-style.appendChild(document.createTextNode(".page p code,.page li code{background-color: #fff5f5!important;color: #ff502c!important;padding: .065em .4em!important;}"));
-var head = document.getElementsByTagName("head")[0];
-head.appendChild(style);
-</div>
