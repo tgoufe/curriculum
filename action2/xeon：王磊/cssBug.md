@@ -68,16 +68,16 @@ overflow 除了 visible 以外的值（hidden，auto，scroll）；
 	width: 200px;
 }
 .floatBox::after {
-		content: '';
-		display: block;
-		clear: both;
+	content: '';
+	display: block;
+	clear: both;
 }
 ```
 
 ```html
 <div class="floatBox">
-		<div class="boxOne"></div>
-		<div class="boxTwo"></div>
+	<div class="boxOne"></div>
+	<div class="boxTwo"></div>
 </div>
 ```
 
@@ -87,17 +87,17 @@ overflow 除了 visible 以外的值（hidden，auto，scroll）；
 
 ```css
 .chrome{
-		background:red;
-		min-width: 1000px;
+	background:red;
+	min-width: 1000px;
 }
 .chrome div{
-		width:1000px;
+	width:1000px;
 }
 ```
 
 ```html
 <div class="chrome">
-		<div>浏览器</div>
+	<div>浏览器</div>
 </div>
 ```
 
@@ -115,7 +115,7 @@ overflow 除了 visible 以外的值（hidden，auto，scroll）；
 
 ```html
 <div style="background:red">
-		<img src="bingshanbear.svg" alt="">
+	<img src="bingshanbear.svg" alt="">
 </div>
 ```
 
@@ -210,18 +210,18 @@ background-clip:padding-box;
 
 ```css
 .borderRadius{
-		border:1px solid red;
-		width:300px;
-		height:100px;
-		border-radius: 20px;
-		position: relative;
+	border:1px solid red;
+	width:300px;
+	height:100px;
+	border-radius: 20px;
+	position: relative;
 }
 .borderRadius:after{
-		content: '';
-		position: absolute;
-		width:100%;
-		border-top:1px solid black;
-		transform: scaleY(0.5);
+	content: '';
+	position: absolute;
+	width:100%;
+	border-top:1px solid black;
+	transform: scaleY(0.5);
 }
 ```
 
@@ -232,22 +232,22 @@ background-clip:padding-box;
 #### 带圆角的四边框
 ```css
 .borderRadius{
-		border:1px solid red;
-		width:300px;
-		height:100px;
-		border-radius: 20px;
-		position: relative;
+	border:1px solid red;
+	width:300px;
+	height:100px;
+	border-radius: 20px;
+	position: relative;
 }
 .borderRadius:after{
-		content: '';
-		position: absolute;
-		width:200%;
-		height: 200%;
-		left:-50%;
-		top:-50%;
-		border-radius: 40px;
-		border:1px solid black;
-		transform: scale(0.5);
+	content: '';
+	position: absolute;
+	width:200%;
+	height: 200%;
+	left:-50%;
+	top:-50%;
+	border-radius: 40px;
+	border:1px solid black;
+	transform: scale(0.5);
 }
 ```
 ```html
