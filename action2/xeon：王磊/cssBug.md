@@ -22,8 +22,11 @@ categories: html css3
 方法二：块级格式化（BFC）,父元素触发BFC，改变div内部的渲染规则。（这么做，说白了就是内部div不会影响外部div）
 
 浮动元素，float 除 none 以外的值； 
+
 定位元素，position（absolute，fixed）； 
+
 display 为以下其中之一的值 inline-block，table-cell，table-caption； 
+
 overflow 除了 visible 以外的值（hidden，auto，scroll）；
 
 ```html
@@ -226,7 +229,7 @@ background-clip:padding-box;
 <div class="borderRadius"></div>
 ```
 
-#### 带园角的四边框
+#### 带圆角的四边框
 ```css
 .borderRadius{
 		border:1px solid red;
