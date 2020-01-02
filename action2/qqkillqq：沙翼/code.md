@@ -389,6 +389,18 @@ const intersectionWith = (...args) => {
 
 我自己使用的时候会把上面这6个函数合并成一个函数fuckJava(arrlist,fn,b=true)，然后通过回调的参数和布尔类型的true false来实现对应的功能，不过不建议在项目里这样使用，因为其他开发人员可能会弄乱，关于名字，你可以想想什么时候你会用到这个函数。感兴趣的可以自己封装一下。
 
+## 去重
+
+```javascript
+
+```
+
+## 删除相同
+
+```javascript
+
+```
+
 ## 限定范围随机数
 
 ```javascript
