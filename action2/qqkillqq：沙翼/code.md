@@ -665,7 +665,7 @@ const getScrollPosition = (el = window) => ({
 const isBrowser = () => ![typeof window, typeof document].includes('undefined');
 ```
 
-# 列表转换为树
+## 列表转换为树
 
 ```javas
 function listToTree(array,idName,parentName){
