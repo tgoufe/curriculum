@@ -665,3 +665,46 @@ const getScrollPosition = (el = window) => ({
 const isBrowser = () => ![typeof window, typeof document].includes('undefined');
 ```
 
+## 列表转换为树
+
+```javas
+function listToTree(array,idName,parentName){
+	let rs=[];
+	let record={}
+	let nextList=[]
+	function doNext(){
+		let needTodo=false;
+		for(let i=0;i<nextList.length;i++){
+			let category=nextList[i]
+			let target=record[category[parentName]];
+			if(target){
+				target.children=target.children||[];
+				target.children.push(category)
+				record[category[idName]]=category
+				nextList.splice(i--,1)
+				needTodo=true;
+			}
+		}
+		needTodo && doNext()
+	}
+	for(let i=0;i<array.length;i++){
+		let category=array[i]
+		if(!category[parentName]){
+			rs.push(category)
+			record[category[idName]]=category
+		}else{
+			let target=record[category[parentName]];
+			if(target){
+				target.children=target.children||[];
+				target.children.push(category)
+				record[category[idName]]=category
+			}else{
+				nextList.push(category)
+			}
+		}
+	}
+	doNext()
+	return rs;
+}
+```
+

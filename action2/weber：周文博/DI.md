@@ -1,5 +1,5 @@
 ---
-title: 依赖注入
+title: 架构设计：依赖注入
 date: 2019-12-09 12:52:37
 tags:
   - JavaScript
@@ -8,13 +8,14 @@ tags:
   - 依赖注入
   - IoC
   - 控制反转
+  - 架构设计
 ---
 
 大家一起学习。。。
 
 <!--more-->
 
-# 依赖注入
+# 架构设计：依赖注入
 
 ## 缘起
 
@@ -223,12 +224,12 @@ class LocalStorageModel extends Model{
 
 // IndexedDB 模块继承 Model 抽象
 class IndexedDBModel extends Model{   
-	/**
-	 * @param   {string}    key
-	 * @param   {*}         value
-	 * @return  {Promise<boolean>}  返回一个 Promise 对象，在 resolve 时传回 true
-	 * */
-	setData(key, value){   
+    /**
+     * @param   {string}    key
+     * @param   {*}         value
+     * @return  {Promise<boolean>}  返回一个 Promise 对象，在 resolve 时传回 true
+     * */
+    setData(key, value){   
         return new Promise((resolve, reject)=>{
             let objectStore = indexedDB.transaction(['store'], 'readwrite').objectStore( 'store' )
                 , objectStoreRequest = objectStore.put({
@@ -247,10 +248,10 @@ class IndexedDBModel extends Model{
         });
     }
     /**
-	 * @param   {string}    key
-	 * @return  {Promise<*>}
-	 * */
-	getData(key){
+     * @param   {string}    key
+     * @return  {Promise<*>}
+     * */
+    getData(key){
         return new Promise((resolve, reject)=>{
             let objectStore = indexedDB.transaction(['store'], 'readwrite').objectStore( 'store' )
                 , objectStoreRequest = objectStore.get( key )
