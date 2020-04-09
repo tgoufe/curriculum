@@ -11,3 +11,15 @@ max: { type: Number, default: 2 },//最大文件尺寸
 success 参数：imageurl
 ```
 
+多图上传
+
+```html
+<tgos-upload-image-more v-model="要绑定的数据"></tgos-upload-image-more>
+```
+
+关闭标签页面
+
+```javascript
+this.$emit("close-page");
+```
+

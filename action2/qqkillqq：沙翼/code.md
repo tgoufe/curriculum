@@ -618,29 +618,28 @@ const getFolders=(filePath, deep = true)=>fs.readdirSync(filePath).reduce((rs, i
 ## 页面滚动
 
 ```javascript
-const getScrollPosition = () =>document.documentElement.scrollTop || document.body.scrollTop
-const scrollTop = (pos=0) => {
-  const c = document.documentElement.scrollTop || document.body.scrollTop;
-  if (c > pos) {console.log(c)
-    window.requestAnimationFrame(()=>scrollTop(pos));
-    window.scrollTo(0, c - c / 8);
-  }
-};
-const scrollBottom = (pos=0) => {
-  const c = document.documentElement.scrollTop || document.body.scrollTop;
-  if (c < pos-8) {console.log(c,pos)
-    window.requestAnimationFrame(()=>scrollBottom(pos));
-    window.scrollTo(0, c + (pos - c) / 8);
-  }
-};
-const scrollTo = (pos)=>{
-  const c = document.documentElement.scrollTop || document.body.scrollTop;
-  if (c > pos) {
-    scrollTop(pos)
-  }else if(c<pos){
-    scrollBottom(pos)
-  }
-}
+const cubic = value => Math.pow(value, 3);
+const easeInOutCubic = value =>
+  value < 0.5 ? cubic(value * 2) / 2 : 1 - cubic((1 - value) * 2) / 2;
+const scrollTo=(targetValue = 0)=>{
+      const el = document.documentElement || document.body;
+      const beginTime = Date.now();
+      const beginValue = el.scrollTop;
+      const rAF =
+        window.requestAnimationFrame || (func => setTimeout(func, 16));
+      const frameFunc = () => {
+        const progress = (Date.now() - beginTime) / 500;
+        if (progress < 1) {
+          el.scrollTop =
+            (beginValue - targetValue) * (1 - easeInOutCubic(progress)) +
+            targetValue;
+          rAF(frameFunc);
+        } else {
+          el.scrollTop = targetValue;
+        }
+      };
+      rAF(frameFunc);
+    }
 scrollTo(400); //自己调整速度
 ```
 
