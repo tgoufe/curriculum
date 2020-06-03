@@ -666,7 +666,7 @@ const isBrowser = () => ![typeof window, typeof document].includes('undefined');
 
 ## 列表转换为树
 
-```javas
+```javascript
 function listToTree(array,idName,parentName){
 	let rs=[];
 	let record={}
