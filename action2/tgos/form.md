@@ -84,6 +84,7 @@ export default {
 this.$refs.form.validate()//true or false
 this.$refs.form.getData()//相当于直接获取model
 this.$refs.form.clear(['name','sex'])//清空name sex两个表单项
+//调用接口获取下来菜单的值，并异步设置
 service.getData().then(data=>{
   this.$refs.form.setOptions({
     sex:data.map(i=>({value:i.name,value:i.id}))
