@@ -20,9 +20,14 @@ export default {
 </script>
 ```
 
-## prop：
+## props
 
-### data
+| 属性名      | 类型    | 默认值 | 说明             |
+| ----------- | ------- | ------ | ---------------- |
+| label-width | String  | 80px   | 标签宽度         |
+| inline      | Boolean | false  | 是否使用行内显示 |
+
+## data
 
 用于描述表单内容的object数组，结构如下
 
@@ -51,7 +56,7 @@ type特殊封装可选值：
 | store/stores       | 门店的单选和多选         | 可以自动搜索，会从store中读取要传给后端的值     |
 | selects            | 多选下拉                 |                                                 |
 
-### v-model
+## v-model
 
 用于设置表单的初始数据和获取最终数据，通常设置一个空对象即可，如果需要设置默认值，可以对和prop相同的key赋值。
 
@@ -79,7 +84,7 @@ export default {
 | getData    | 获取表单内容                                         | 无                                                           |
 | clear      | 清空表单项                                           | 默认清空所有表单，可以以数组的形式传入prop名称来指定清除对应项。 |
 | reset      | 重置表单项                                           | 通常情况为它和clear的作用是相同的，区别在于如果model绑定了默认值，使用该方法可以还原到默认值，而clear会全部清空 |
-| setOptions | 对需要设置options进行批量设置通常是select checkbox等 |                                                              |
+| setOptions | 对需要设置options进行批量设置通常是select checkbox等 | 表示选项和属性对应关系的对象                                 |
 
 ## methods Exp
 
