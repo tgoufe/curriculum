@@ -84,8 +84,10 @@ export default {
 this.$refs.form.validate()//true or false
 this.$refs.form.getData()//相当于直接获取model
 this.$refs.form.clear(['name','sex'])//清空name sex两个表单项
-this.$refs.form.setOptions({
-  sex:[{value:1,label:'男'},{value:2,label:'女'}]
+service.getData().then(data=>{
+  this.$refs.form.setOptions({
+    sex:data.map(i=>({value:i.name,value:i.id}))
+  }) 
 })
 ```
 
