@@ -4,17 +4,20 @@
 
 ```vue
 <tgos-form :data="fromData" v-model="fromModel"></tgos-form>
+<script>
+import * as validator from "_src/libs/validator.js";
 export default {
   data(){
     return {
       fromData:[
-        {label:'用户名',prop:'userName'},
+        {label:'用户名',prop:'userName',rules:[validator.stringLen(8)]},
         {label:'性别',prop:'sex',type:'radio',options:{男:1,女:2}}
       ],
       fromModel:{},
     }
   }
 }
+</script>
 ```
 
 ## prop：
