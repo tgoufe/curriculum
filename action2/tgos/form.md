@@ -1,31 +1,6 @@
-# tgos常用组件
+# 表单组件
 
-## 单图片上传
-
-```html
-<tgos-upload-image-single v-model="要绑定的数据"></tgos-upload-image-single>
-属性：
-width: { type: String, default: '150' },//展示的尺寸
-max: { type: Number, default: 2 },//最大文件尺寸
-事件
-success 参数：imageurl
-```
-
-## 多图上传
-
-```html
-<tgos-upload-image-more v-model="要绑定的数据"></tgos-upload-image-more>
-```
-
-## 关闭标签页面
-
-```javascript
-this.$emit("close-page");
-```
-
-## 表单组件
-
-### 代码片段：
+## 代码片段：
 
 ```vue
 <tgos-form :data="fromData" v-model="fromModel"></tgos-form>
@@ -42,9 +17,9 @@ export default {
 }
 ```
 
-### prop：
+## prop：
 
-#### data
+### data
 
 用于描述表单内容的object数组，结构如下
 
@@ -73,7 +48,7 @@ type特殊封装可选值：
 | store/stores       | 门店的单选和多选         | 可以自动搜索，会从store中读取要传给后端的值     |
 | selects            | 多选下拉                 |                                                 |
 
-#### v-model
+### v-model
 
 用于设置表单的初始数据和获取最终数据，通常设置一个空对象即可，如果需要设置默认值，可以对和prop相同的key赋值。
 
@@ -93,11 +68,7 @@ export default {
 }
 ```
 
-
-
-
-
-### methods
+## methods
 
 | 事件名称   | 说明                                                 | 参数                                                         |
 | ---------- | ---------------------------------------------------- | ------------------------------------------------------------ |
@@ -105,8 +76,9 @@ export default {
 | getData    | 获取表单内容                                         | 无                                                           |
 | clear      | 清空表单项                                           | 默认清空所有表单，可以以数组的形式传入prop名称来指定清除对应项。 |
 | reset      | 重置表单项                                           | 通常情况为它和clear的作用是相同的，区别在于如果model绑定了默认值，使用该方法可以还原到默认值，而clear会全部清空 |
-| setOptions | 对需要设置options进行批量设置通常是select checkbox等 | setOptions({sex:[{value:1,label:'男'},{value:2,label:'女'}]}) |
-### methods Exp
+| setOptions | 对需要设置options进行批量设置通常是select checkbox等 |                                                              |
+
+## methods Exp
 
 ```javascript
 this.$refs.form.validate()//true or false
@@ -117,9 +89,7 @@ this.$refs.form.setOptions({
 })
 ```
 
-
-
-### slot
+## slot
 
 遇到复杂的表单结构可以使用作用域插槽的方式来进行自定义开发。
 
@@ -150,5 +120,15 @@ export default {
   }
 };
 </script>
+```
+
+## 前置和后置文本
+
+有时需要对表单项增加前置和后置的说明文案，此时可以使用prepend和append属性进行控制
+
+```javascript
+fromData: [
+  { label: "邮箱", prop: "email", append:'@163.com' }
+]
 ```
 
