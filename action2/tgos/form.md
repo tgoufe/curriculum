@@ -143,3 +143,24 @@ fromData: [
 ]
 ```
 
+## 显示隐藏和禁用
+
+formData中的item提供show和disable两个属性，用于显示和禁用该项，如果它是一个动态的值，可以使用返回布尔类型的函数
+
+```javascript
+export default {
+  data() {
+    let _this=this;//这里需要注意一定要保留this
+    return {
+      fromModel: { },
+      fromData: [
+        { label: "输入状态", prop: "sss", type: "radio" ,options:{禁用:2,显示:1,隐藏:0} },
+        { label: "输入项", prop: "name", 
+         show:() => _this.fromModel.sss,
+         disable:()=>_this.fromModel.sss===2
+        }
+      ]
+    };
+  }
+};
+```
