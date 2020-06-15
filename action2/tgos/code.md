@@ -151,3 +151,39 @@ export default {
 </script>
 ```
 
+## 日志弹窗
+
+```vue
+<template>
+		<el-drawer title="log日志" :visible.sync="logVisible">
+      <div class="padding20">
+        <tgos-table :data="logData" v-bind="logProps" ref="log"></tgos-table>
+      </div>
+    </el-drawer>
+</template>
+<script>
+export default {
+  data() {
+    let _this = this;
+    return {
+      logVisible: false,
+      logData: [],
+      logProps: {
+        column: [
+          { label: "操作时间", prop: "modifyTime" },
+          { label: "操作人", prop: "operator" },
+          { label: "操作内容", prop: "content" },
+          { label: "IP地址", prop: "ipAddress" }
+        ]
+      }
+    };
+  },
+  methods: {
+    log() {
+      this.logVisible = true;
+    }
+  }
+};
+</script>
+```
+
