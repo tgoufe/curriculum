@@ -157,7 +157,7 @@ export default {
 <template>
 		<el-drawer title="log日志" :visible.sync="logVisible">
       <div class="padding20">
-        <tgos-table :data="logData" v-bind="logProps" ref="log"></tgos-table>
+        <tgos-table :data="logData" v-bind="logProps" ref="log" @paginations="logFetch"></tgos-table>
       </div>
     </el-drawer>
 </template>
@@ -167,20 +167,31 @@ export default {
     let _this = this;
     return {
       logVisible: false,
+      logModel: {},
       logData: [],
       logProps: {
         column: [
-          { label: "操作时间", prop: "modifyTime" },
-          { label: "操作人", prop: "operator" },
-          { label: "操作内容", prop: "content" },
-          { label: "IP地址", prop: "ipAddress" }
-        ]
+          { label: "id", prop: "id" },
+          { label: "bizId", prop: "bizId" },
+          { label: "操作人", prop: "userName" },
+          { label: "操作内容", prop: "opContent" },
+          { label: "IP地址", prop: "ip" }
+        ],
+        pagination: true
       }
     };
   },
   methods: {
-    log() {
-      this.logVisible = true;
+    showLog(item) {
+      this.logModel.id = item.id;
+      this.logFetch();
+    },
+    logFetch(page = 1, requestCount = true) {
+      let data = _.assign(this.logModel, { page, rows: 10 });
+      baseService.platformRoleLogList(data).then(data => {
+        this.logData = data;
+        this.logVisible = true;
+      });
     }
   }
 };
