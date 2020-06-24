@@ -72,7 +72,38 @@ export default {
 
 ## 勾选框数据读取
 
-表格组件内置了selected属性，可以保存当前已经选定的内容，可用于直接读取
+表格组件内置了selected属性，可以保存当前已经选定的内容，可用于直接读取，你可以通过设置表格的selection属性来设置，也可以在column中添加{ type: "selection" }来设置
+
+```vue
+<template>
+  <tgos-table :data="tableData" v-bind="tableProps" ref="tabel"></tgos-table>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      tableData: [],
+      tableProps: {
+        column: [
+          { type: "selection" },
+          { label: "状态", prop: "state" }
+        ],
+        selection:true
+      }
+    };
+  },
+  methods:{
+    getSelection(){
+      console.log(this.$refs.table.selected)
+    }
+  }
+};
+</script>
+```
+
+## 可编辑表格
+
+为column的单元项增加editEvent方法即可使该列数据支持编辑，需要注意的是editEvent方法需要返回一个promise或者一个布尔类型的值，表格组件将根据返回值来设置或还原表格数据
 
 ```vue
 <template>
@@ -85,7 +116,9 @@ export default {
       tableData: [],
       tableProps: {
         column: [
-          { label: "状态", prop: "state" }
+          { label: "状态", prop: "state",editEvent:(newValue,oldVaue,item,index)=>{
+            return api.setState({id:item.id,state:newValue})
+          } }
         ]
       }
     };
@@ -93,6 +126,8 @@ export default {
 };
 </script>
 ```
+
+## 
 
 
 
