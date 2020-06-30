@@ -155,9 +155,11 @@ export default {
 
 ```vue
 <template>
-		<el-drawer title="log日志" :visible.sync="logVisible">
+		<el-drawer title="log日志" :visible.sync="logVisible"  size="800px" custom-class="scroll-container-y">
       <div class="padding20">
-        <tgos-table :data="logData" v-bind="logProps" ref="log" @paginations="logFetch"></tgos-table>
+        <tgos-table :data="logData" v-bind="logProps" ref="log" @paginations="logFetch">
+  				<template slot="createTime" slot-scope="scope">{{ scope.item | time }}</template>
+  			</tgos-table>
       </div>
     </el-drawer>
 </template>
@@ -172,9 +174,9 @@ export default {
       logProps: {
         column: [
           { label: "id", prop: "id" },
-          { label: "bizId", prop: "bizId" },
           { label: "操作人", prop: "userName" },
           { label: "操作内容", prop: "opContent" },
+          { label: "时间", prop: "createTime" },
           { label: "IP地址", prop: "ip" }
         ],
         pagination: true
@@ -188,6 +190,10 @@ export default {
     },
     logFetch(page = 1, requestCount = true) {
       let data = _.assign(this.logModel, { page, rows: 10 });
+      requestCount &&
+        baseService.mpStoreLogListCount(data).then(data => {
+          this.logProps.pagination = data;
+        });
       baseService.platformRoleLogList(data).then(data => {
         this.logData = data;
         this.logVisible = true;
