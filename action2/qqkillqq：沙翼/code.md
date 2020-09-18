@@ -737,3 +737,26 @@ function dateFormat(fmt, date) {
 dateFormat("yyyy-MM-dd hh:mm:ss", new Date)
 ```
 
+## 前端下载图片
+
+```javascript
+function downloadPicture (src, name=+new Date + '.jpg') {
+  let image = new Image()
+  image.setAttribute('crossOrigin', 'anonymous')
+  image.onload = function () {
+    let canvas = document.createElement('canvas')
+    canvas.width = image.width
+    canvas.height = image.height
+    let context = canvas.getContext('2d')
+    context.drawImage(image, 0, 0, 200, 200)
+    let url = canvas.toDataURL('image/png')
+    let a = document.createElement('a')
+    let event = new MouseEvent('click')
+    a.download = name 
+    a.href = url
+    a.dispatchEvent(event)
+  }
+  image.src = src;
+}
+```
+
