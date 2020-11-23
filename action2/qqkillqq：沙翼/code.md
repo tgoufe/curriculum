@@ -768,7 +768,7 @@ function downloadPicture (src, name=+new Date + '.jpg') {
 }
 ```
 
-cookie操作
+## cookie操作
 
 ```javascript
 const getCookie = name => {
