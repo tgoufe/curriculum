@@ -615,6 +615,14 @@ const getFolders=(filePath, deep = true)=>fs.readdirSync(filePath).reduce((rs, i
 
 功能：返回一个数组，包含文件或文件夹的路径和名称，这两个属性是最常用的，如果需要其他的可以自行添加
 
+## node下深度建立文件夹
+
+```javascript
+const path = require('path')
+const fs = require('fs')
+const mkdirsSync = dirname => fs.existsSync(dirname) || mkdirsSync(path.dirname(dirname)) || fs.mkdirSync(dirname);
+```
+
 ## 页面滚动
 
 ```javascript
@@ -758,5 +766,20 @@ function downloadPicture (src, name=+new Date + '.jpg') {
   }
   image.src = src;
 }
+```
+
+cookie操作
+
+```javascript
+const getCookie = name => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+const setCookie = (name, value, days = 7, path = '/') => {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString()
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=' + path
+}
+const deleteCookie = name =>document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 ```
 
