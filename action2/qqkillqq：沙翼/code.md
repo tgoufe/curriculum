@@ -41,7 +41,7 @@ const throttle = (func,wait = 50)=> {
 ```javascript
 const throttle = (func,wait = 50,opts = {})=>{
   let preTime = 0,timer = null,{ leading = true, trailing = true } = opts;
-  let throttled function (...args) {
+  let throttled = function (...args) {
     let now = Date.now();
     if(!leading && !preTime)preTime = now;
     if(now - preTime >= wait || preTime > now){
@@ -68,7 +68,7 @@ const throttle = (func,wait = 50,opts = {})=>{
 }
 const debounce = (func,wait = 50,opts = {})=> {
   let timer = null,result,{leading = false}=opts;
-  let debounced function(...args){
+  let debounced = function(...args){
     if(timer) clearTimeout(timer);
     if(leading){
       let callNow = !timer;
@@ -756,7 +756,7 @@ function downloadPicture (src, name=+new Date + '.jpg') {
     canvas.width = image.width
     canvas.height = image.height
     let context = canvas.getContext('2d')
-    context.drawImage(image, 0, 0, 200, 200)
+    context.drawImage(image, 0, 0, image.width, image.height)
     let url = canvas.toDataURL('image/png')
     let a = document.createElement('a')
     let event = new MouseEvent('click')
