@@ -395,10 +395,17 @@ const intersectionWith = (...args) => {
 
 ```
 
-## 删除相同
+## 扁平化数组
 
 ```javascript
+//深度扁平和指定层级扁平
+const deepFlatten = arr => [].concat(...arr.map(v => (Array.isArray(v) ? deepFlatten(v) : v)));
+const flatten = (arr, depth = 1) =>
+  arr.reduce((a, v) => a.concat(depth > 1 && Array.isArray(v) ? flatten(v, depth - 1) : v), []);
 
+flatten([1, [2], 3, 4]); // [1, 2, 3, 4]
+flatten([1, [2, [3, [4, 5], 6], 7], 8], 2); // [1, 2, 3, [4, 5], 6, 7, 8]
+deepFlatten([1, [2], [[3], 4], 5]); // [1,2,3,4,5]
 ```
 
 ## 限定范围随机数
@@ -745,6 +752,16 @@ function dateFormat(fmt, date) {
 dateFormat("yyyy-MM-dd hh:mm:ss", new Date)
 ```
 
+## 判断两个时间戳是否为同一天
+
+最先想到的办法一般都是使用getDay方法来判断，但是实际上有更加简单的方法
+
+```javascript
+const isSameDate = (dateA, dateB) => dateA.toISOString() === dateB.toISOString();
+```
+
+
+
 ## 前端下载图片
 
 ```javascript
@@ -781,5 +798,54 @@ const setCookie = (name, value, days = 7, path = '/') => {
   document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=' + path
 }
 const deleteCookie = name =>document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+```
+
+## 判断元素是否在窗口内可见
+
+```javascript
+const elementIsVisibleInViewport = (el, partiallyVisible = false) => {     
+    const { top, left, bottom, right } = el.getBoundingClientRect();     
+    const { innerHeight, innerWidth } = window;     
+    return partiallyVisible ? ((top > 0 && top < innerHeight) || (bottom > 0 && bottom < innerHeight)) && ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth)) : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth; 
+}; 
+```
+
+## 表单元素对象化
+
+```javascript
+const formToObject = form => Array.from(new FormData(form)).reduce((acc, [key, value]) => ({  ...acc,  [key]: value  }),{}); 
+// Example 
+formToObject(document.querySelector("#form")); 
+// { email: "test@email.com", name: "Test Name" }
+
+```
+
+## 将字符串粘贴到剪切板
+
+```javascript
+const copyToClipboard = str => {     
+    const el = document.createElement('textarea');     
+    el.value = str;     
+    el.setAttribute('readonly', '');     
+    el.style.position = 'absolute';     
+    el.style.left = '-9999px';     
+    document.body.appendChild(el);     
+    const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;     
+    el.select();     
+    document.execCommand('copy');     
+    document.body.removeChild(el);     
+    if (selected) {         
+        document.getSelection().removeAllRanges();         
+        document.getSelection().addRange(selected);     
+    } 
+}; 
+```
+
+## cookies操作
+
+```javascript
+const getCookie = name =>`; ${document.cookie}`.split(`; ${name}=`).pop().split(';').shift()
+const setCookie = (name, value, days = 7, path = '/') => document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + new Date(Date.now() + days * 864e5).toUTCString() + '; path=' + path
+const delete_cookie = name => document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 ```
 
