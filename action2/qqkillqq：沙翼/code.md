@@ -720,6 +720,21 @@ function listToTree(array,idName,parentName){
 	doNext()
 	return rs;
 }
+//另一个版本
+function listToTree(data) {
+  let tag = {};
+  data.forEach((item) => {
+    tag[`tag_${item.parentId}`] = tag[`tag_${item.parentId}`] || [];
+    tag[`tag_${item.parentId}`].push(item);
+  });
+  (function doNext(key = null) {
+    tag[`tag_${key}`].forEach((item) => {
+      tag[`tag_${item.id}`] && (item.children = tag[`tag_${item.id}`]);
+      item.children && doNext(item.id);
+    });
+  })();
+  return tag.tag_null;
+}
 ```
 
 ## 时间格式化
