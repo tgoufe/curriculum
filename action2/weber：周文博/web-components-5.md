@@ -68,8 +68,8 @@ document.getElementById('iframe').addEventListener('load', (e)=>{
 
 ```css
 :defined p{
-		color: green;
-	}
+	color: green;
+}
 :defined ul{
     color: cyan;
 }
